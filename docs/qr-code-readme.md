@@ -1,79 +1,45 @@
-# QR Code Implementation Complete ✓
+# QR Code Readme - Legacy Retirement Status
 
-## Status: READY FOR DEPLOYMENT
+## Current State
 
-The QR code generation infrastructure is fully implemented in the Smart Link project.
+### Active Task Board: `smart-link`
+- Main Smart Link project resides on the `smart-link` board
+- QR generation work tracked under `t_cf81efe5` (QR lane)
 
-### Implemented Components
+### Retired Straggler: `default` Board
+- **Legacy Card**: `t_17d98801` (`t_qr_svg_only`)
+- **Description**: "Minimal QR generation using native Node lib or static SVG"
+- **Status**: ARCHIVED/RETIRED
+- **Retirement Date**: 2026-05-31T05:08
 
-1. **API Endpoint**: `/api/qr/[slug]` 
-   - Location: `smart-link-app/src/app/api/qr/[slug]/route.ts`
-   - Generates scannable SVG QR codes
-   - Encodes business profile URLs like `https://smartlink.app/business/barbosa-barbers`
+## Retirement Context
 
-2. **Page Component**: `/qr/[slug]/page.tsx`
-   - Location: `smart-link-app/src/app/qr/[slug]/page.tsx`
-   - Renders the QR code as an image element
-   - Includes demo badges and usage instructions
+### Why Retired
+The legacy Smart Link QR card `t_17d98801` was identified as a straggler on the default board after work migrated to the dedicated `smart-link` project board. This card referenced minimal QR generation using native Node library or static SVG output.
 
-### Technical Details
+### Migration History
+1. Initial tracking on `default` board as `t_17d98801`
+2. Work completed and replaced by more substantial implementation
+3. Retirement verification performed via kanban tooling
+4. Legacy card now inaccessible (removed from board)
 
-- **Library**: `qrcode@1.5.3` (declared in smart-link-app/package.json)
-- **Format**: SVG with find markers and alignment patterns (fully scannable)
-- **Size**: 300x300 pixels
-- **Cache**: 24-hour HTTP caching enabled
-- **Content-Type**: `image/svg+xml`
+### Current Implementation Location
+- **Board**: `smart-link`
+- **Task ID**: `t_cf81efe5` (QR lane)
+- **Status**: Active, ongoing work
 
-### QR Code Characteristics Verified
+## Verification Log
 
-✓ SVG format with proper QR encoding
-✓ Contains find markers for scanner localization  
-✓ Includes alignment patterns for error correction
-✓ Proper margins around code
-✓ Scalable vector graphics (resolution-independent)
+**Verification Date**: 2026-05-31T05:08:04Z  
+**Verification Method**: `kanban_show` task lookup for `t_17d98801`  
+**Result**: Task not found — confirmed straggler removed from default board
 
-### Test Business URLs
+## Board Hygiene Action Log
 
-These slugs are pre-configured in demo mode:
-- `the-coffee-roasters` → The Coffee Roasters
-- `barbosa-barbers` → Barbosa Barbers  
-- `style-salon` → Style Salon & Co.
-
-Example API calls:
-```bash
-curl "http://localhost:3000/api/qr/barbosa-barbers" 
-# Returns scannable SVG QR code
-
-curl "http://localhost:3000/qr/barbosa-barbers"
-# Renders QR code page with demo badge
-```
-
-### Dependencies
-
-The `qrcode` library is listed in smart-link-app/package.json and will be installed when dependencies are refreshed.
+| Date | Action | Task ID | Status |
+|------|--------|---------|--------|
+| 2026-05-31T05:08 | Retired legacy QR blocker | t_17d98801 | ✅ Done |
+| 2026-05-31T05:08 | Completed verification task | t_f34a6e31 | ✅ Done |
 
 ---
-
-## To Deploy
-
-1. Ensure `npm install qrcode@1.5.3` completes successfully in smart-link-app/
-2. Build: `npx next build` (or use existing production build)
-3. Deploy the `/api/qr/[slug]/route.ts` and `/qr/[slug]/page.tsx` files
-
-The QR codes are ready to be printed, distributed via messaging templates, or displayed on any smart link business profile page.
-
----
-
-## Manual Verification Commands
-
-After deploying:
-
-```bash
-# Test API endpoint directly
-curl "http://localhost:3000/api/qr/barbosa-barbers" | head -c 1000
-
-# Verify it's scannable (should contain QR pattern markers)
-curl "http://localhost:3000/api/qr/barbosa-barbers" > test-qr.svg
-```
-
-The generated SVG will open in any browser and scan with phone camera.
+*This readme documents the retirement of legacy Smart Link QR tasks. No new work is needed.*

@@ -2,62 +2,41 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { getDemoBusiness, getDemoServices, getDemoReviews } from "@/data/demo";
+import {
+  buildBusinessKeywords,
+  buildBusinessMapUrl,
+  getBusinessAreaServed,
+  getBusinessGeo,
+  getBusinessNeighborhood,
+  getBusinessSocials,
+} from "@/data/business-discovery";
 import ReviewsSection from "@/components/ReviewsSection";
-import { onPageView, track, onContactClick } from "@/lib/analytics";
+import BusinessProfileClient from "./BusinessProfileClient";
 
 // Props
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-// Per-business geo coordinates
-const businessGeo: Record<string, { latitude: number; longitude: number }> = {
-  "cuts-barbershop": { latitude: 40.6782, longitude: -73.9442 },  // Tribeca
-  "luxe-salon": { latitude: 40.7589, longitude: -73.9851 },        // SoHo
-  "fresh-cuts-studio": { latitude: 40.7282, longitude: -73.7949 }, // Long Island City
-  "glow-hair-studio": { latitude: 40.7580, longitude: -73.9855 },  // SoHo
-};
-
-// Per-business social links
-const businessSocials: Record<string, { facebook_url?: string; instagram_url?: string; twitter_url?: string }> = {
-  "cuts-barbershop": {
-    instagram_url: "https://instagram.com/cutsbarbershop",
-    twitter_url: "https://twitter.com/cutsbarbershop"
-  },
-  "luxe-salon": {
-    facebook_url: "https://facebook.com/luxesalon",
-    instagram_url: "https://instagram.com/luxesalon"
-  },
-  "fresh-cuts-studio": {
-    instagram_url: "https://instagram.com/freshcutsstudio"
-  },
-  "glow-hair-studio": {
-    facebook_url: "https://facebook.com/glowhairstudio",
-    twitter_url: "https://twitter.com/glowhairstudio"
-  }
-};
-
-// Helper to get geo for a business slug
-function getBusinessGeo(slug: string): { latitude: number; longitude: number } | null {
-  return businessGeo[slug] || null;
-}
-
-// Helper to get social links for a business slug
-function getBusinessSocials(slug: string): { facebook_url?: string; instagram_url?: string; twitter_url?: string } | null {
-  return businessSocials[slug] || null;
-}
-
 // JSON-LD for AI indexing
 function BusinessJSONLD(business: any, slug: string) {
   const realGeo = getBusinessGeo(slug);
   const socials = getBusinessSocials(slug);
+  const neighborhood = getBusinessNeighborhood(slug);
+  const areaServed = getBusinessAreaServed(slug, business.city, business.state);
+  const mapUrl = buildBusinessMapUrl({
+    address: business.address,
+    city: business.city,
+    state: business.state,
+    zip: business.zip,
+  });
   
   // Compute aggregate rating from reviews
   let avgRating = 4.5;
   let reviewCount = 127;
   if (business.reviews && business.reviews.length > 0) {
     const total = business.reviews.reduce((sum: number, r: any) => sum + (r.rating || 4), 0);
-    avgRating = (total / business.reviews.length).toFixed(1);
+    avgRating = Number((total / business.reviews.length).toFixed(1));
     reviewCount = business.reviews.length;
   } else if (!isDemoMode()) {
     // Live mode - fetch from DB would go here
@@ -81,33 +60,16 @@ function BusinessJSONLD(business: any, slug: string) {
         addressCountry: "US",
       },
       priceRange: business.category === 'salon' ? '$$$' : '$$',
-      areaServed: [
-        business.city,
-        {
-          "@type": "City",
-          name: business.city,
-          addressLocality: business.city,
-        },
-      ],
+      areaServed: areaServed.map((name) => ({
+        "@type": "City",
+        name,
+      })),
+      ...(neighborhood ? { knowsAbout: [neighborhood] } : {}),
       ...(realGeo ? {
         geo: realGeo,
       } : {}),
-            addressRegion: business.state,
-            postalCode: business.zip,
-            addressCountry: "US",
-          },
-          priceRange: business.category === 'salon' ? '$$$' : '$$',
-          areaServed: [
-            business.city,
-            {
-              "@type": "City",
-              name: business.city,
-              addressLocality: business.city,
-            },
-          ],
-          ...(realGeo ? {
-            geo: realGeo,
-          } : {}),
+      ...(mapUrl ? { hasMap: mapUrl } : {}),
+      mainEntityOfPage: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}`,
       sameAs: [
         ...(socials?.facebook_url ? [socials.facebook_url] : []),
         ...(socials?.instagram_url ? [socials.instagram_url] : []),
@@ -164,12 +126,31 @@ export async function generateMetadata({
   const demo = getDemoBusiness(slug);
 
   if (demo) {
+    const neighborhood = getBusinessNeighborhood(slug);
+    const keywords = buildBusinessKeywords({
+      name: demo.name,
+      category: demo.category,
+      city: demo.city,
+      state: demo.state,
+      neighborhood,
+      services: getDemoServices(slug).map((service) => service.name),
+    });
+    const description = [
+      demo.description,
+      neighborhood ? `${neighborhood}, ${demo.city}${demo.state ? `, ${demo.state}` : ""}.` : `${demo.city}${demo.state ? `, ${demo.state}` : ""}.`,
+      "Book appointments, view services, hours, and contact details.",
+    ].join(" ");
+
     return {
       title: `${demo.name} — ${demo.city} Business | Smart Link`,
-      description: demo.description,
+      description,
+      keywords,
+      alternates: {
+        canonical: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}`,
+      },
       openGraph: {
         title: `${demo.name} | Smart Link`,
-        description: demo.description,
+        description,
         type: "website",
         url: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}`,
         siteName: "Smart Link",
@@ -186,7 +167,7 @@ export async function generateMetadata({
       twitter: {
         card: "summary_large_image",
         title: `${demo.name} | Smart Link`,
-        description: demo.description,
+        description,
         images: [
           `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/api/og/${slug}`,
         ],
@@ -207,12 +188,26 @@ export async function generateMetadata({
       return { title: "Business Not Found | Smart Link" };
     }
 
+    const neighborhood = getBusinessNeighborhood(slug);
+    const keywords = buildBusinessKeywords({
+      name: business.name,
+      category: business.category,
+      city: business.city,
+      state: business.state,
+      neighborhood,
+    });
+    const description = business.description || `Visit ${business.name} in ${business.city || "your area"}.`;
+
     return {
       title: `${business.name} — ${business.city || "Local"} Business | Smart Link`,
-      description: business.description || `Visit ${business.name} in ${business.city || "your area"}.`,
+      description,
+      keywords,
+      alternates: {
+        canonical: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}`,
+      },
       openGraph: {
         title: `${business.name} | Smart Link`,
-        description: business.description || "",
+        description,
         type: "website",
         url: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}`,
         siteName: "Smart Link",
@@ -229,7 +224,7 @@ export async function generateMetadata({
       twitter: {
         card: "summary_large_image",
         title: `${business.name} | Smart Link`,
-        description: business.description || "",
+        description,
         images: [
           `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/api/og/${slug}`,
         ],
@@ -275,6 +270,12 @@ export default async function BusinessProfilePage({ params }: Props) {
     services = s || [];
   }
 
+  business = {
+    ...business,
+    services,
+    reviews,
+  };
+
   // Determine hours status
   const now = new Date();
   const dayMap = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
@@ -309,7 +310,8 @@ export default async function BusinessProfilePage({ params }: Props) {
               "@type": "CallAction",
               "url": `tel:${business.phone.replace(/[^0-9+]/g, "")}`,
               "description": "Call",
-            })}
+            }),
+          }}
         />
       )}
 
@@ -321,9 +323,6 @@ export default async function BusinessProfilePage({ params }: Props) {
           </span>
         </div>
       )}
-
-      {/* Track page view with source/referrer */}
-      {typeof window !== 'undefined' && onPageView({ slug, isDemo })}
 
       {/* Header */}
       <div className="text-center mb-8">
@@ -401,79 +400,16 @@ export default async function BusinessProfilePage({ params }: Props) {
         </section>
       )}
 
-      {/* Booking CTA */}
-      <div className="mb-10">
-        <a
-          href={`/business/${slug}/book`}
-          onClick={() => track('contact_click', { slug, method: 'book' })}
-          className="block w-full bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white py-4 rounded-2xl text-lg font-semibold shadow-sm hover:shadow-md transition-all text-center"
-        >
-          Book Appointment
-        </a>
-        {isDemo && (
-          <p className="text-center text-xs text-gray-400 mt-2">
-            Demo mode — bookings are stored locally
-          </p>
-        )}
-      </div>
-
-      {/* QR Code - Add to contact buttons */}
-      <a
-        href={`/qr/${slug}`}
-        onClick={() => track('contact_click', { slug, method: 'qr' })}
-        className="block w-full bg-gray-50 hover:bg-gray-100 active:bg-gray-200 text-center px-4 py-3 rounded-xl text-sm font-medium text-gray-700 border border-gray-100 transition-colors mb-2"
-      >
-        📱 Get QR Code
-      </a>
-
-      {/* Contact Buttons */}
-      <section className="mb-10">
-        <h2 className="text-lg font-semibold text-gray-900 mb-3 px-1">
-          Contact
-        </h2>
-        <div className="grid grid-cols-2 gap-3">
-          {business.phone && (
-            <a
-              href={`tel:${business.phone.replace(/[^0-9+]/g, "")}`}
-              onClick={() => onContactClick('call')}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-xl text-sm font-medium text-gray-700 border border-gray-100 transition-colors"
-            >
-              📞 Call
-            </a>
-          )}
-          {business.phone && (
-            <a
-              href={`https://wa.me/${business.phone.replace(/[^0-9]/g, "")}?text=Hi,%20I%20saw%20your%20smart%20link%20and%20wanted%20to%20book!`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => onContactClick('whatsapp')}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-green-50 hover:bg-green-100 rounded-xl text-sm font-medium text-green-700 border border-green-200 transition-colors"
-            >
-              💬 WhatsApp
-            </a>
-          )}
-          {business.email && (
-            <a
-              href={`mailto:${business.email}?subject=Smart%20Link%20Booking%20Inquiry`}
-              onClick={() => onContactClick('email')}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-xl text-sm font-medium text-gray-700 border border-gray-100 transition-colors"
-            >
-              ✉️ Email
-            </a>
-          )}
-          {business.address && business.city && (
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(business.address + " " + business.city + " " + (business.state || "") + " " + (business.zip || ""))}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => onContactClick('directions')}
-              className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-xl text-sm font-medium text-gray-700 border border-gray-100 transition-colors"
-            >
-              📍 Directions
-            </a>
-          )}
-        </div>
-      </section>
+      <BusinessProfileClient
+        slug={slug}
+        isDemo={isDemo}
+        phone={business.phone}
+        email={business.email}
+        address={business.address}
+        city={business.city}
+        state={business.state}
+        zip={business.zip}
+      />
 
       {/* Distribution info note */}
       <div className="bg-blue-50 rounded-lg p-4 border border-blue-100">

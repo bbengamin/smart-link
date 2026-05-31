@@ -26,7 +26,7 @@ export default async function DistributionAffordances() {
           <p className="text-sm text-gray-600 mb-3">
             Print QR codes on receipts, menus, or shop windows. Point directly to your business profile.
           </p>
-          <a href="/qr/the-coffee-roasters" className="inline-block text-blue-600 hover:underline text-sm">
+          <a href="/qr/cuts-barbershop" className="inline-block text-blue-600 hover:underline text-sm">
             View Demo QR →
           </a>
         </div>
@@ -40,7 +40,7 @@ export default async function DistributionAffordances() {
           </div>
           <h2 className="text-lg font-semibold text-gray-900 mb-2">Social Bios</h2>
           <p className="text-sm text-gray-600 mb-3">
-            Use smartlinks.app/business/{slug} as your Instagram, TikTok, or Facebook bio link.
+            Use smartlink.app/business/your-slug as your Instagram, TikTok, or Facebook bio link.
           </p>
           <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">
             Example: smartlink.app/business/the-coffee-roasters

@@ -90,7 +90,7 @@ export function DemoAnalyticsDashboard({ businessSlug }: DemoAnalyticsDashboardP
     }
   }, [businessSlug]);
 
-  const renderFunnelSteps(): React.JSX.Element = () => {
+  const renderFunnelSteps = (): React.JSX.Element | null => {
     if (!metrics) return null;
 
     const steps = [
@@ -129,7 +129,7 @@ export function DemoAnalyticsDashboard({ businessSlug }: DemoAnalyticsDashboardP
     );
   };
 
-  const renderSources(): React.JSX.Element = () => {
+  const renderSources = (): React.JSX.Element | null => {
     if (sources.length === 0) return null;
 
     const maxCount = Math.max(...sources.map(s => s.count), 1);

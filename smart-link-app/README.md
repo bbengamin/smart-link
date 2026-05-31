@@ -63,6 +63,17 @@ Copy `.env.example` to `.env.local` and fill in:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
+- Optional owner alerts: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, and optional `TELEGRAM_THREAD_ID`
+
+## Telegram Owner Alerts
+
+Telegram owner alerts are optional and fail soft by design:
+
+- Demo mode never sends Telegram messages.
+- Live bookings only attempt Telegram delivery when both `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are set.
+- Missing Telegram env vars do not break booking creation or app builds.
+
+Setup details live in `../docs/telegram-owner-alerts.md`.
 
 ## Deployment
 

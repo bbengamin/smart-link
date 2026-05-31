@@ -1,22 +1,16 @@
-import { notFound } from "next/navigation";
+import { getDemoBusiness } from "@/data/demo";
 
 export default async function QRPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  
-  // Try to get business from demo first, then DB
-  let businessName = "";
-  try {
-    const demoBusinesses = ["the-coffee-roasters", "barbosa-barbers", "style-salon"];
-    if (demoBusinesses.includes(slug.toLowerCase())) {
-      const slugLower = slug.toLowerCase();
-      if (slugLower === "the-coffee-roasters") businessName = "The Coffee Roasters";
-      else if (slugLower === "barbosa-barbers") businessName = "Barbosa Barbers";
-      else if (slugLower === "style-salon") businessName = "Style Salon & Co.";
-    }
-  } catch {}
+  const slugValue = String(slug);
+  const encodedSlug = encodeURIComponent(slugValue);
+
+  const demoBusiness = getDemoBusiness(slugValue);
+  const businessName = demoBusiness?.name || "";
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app";
-  const businessUrl = `${baseUrl}/business/${encodeURIComponent(String(slug))}`;
+  const businessUrl = `${baseUrl}/business/${encodedSlug}`;
+  const qrImageUrl = demoBusiness ? `/qr-static/${encodedSlug}.svg` : `/api/qr/${encodedSlug}`;
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
@@ -34,10 +28,10 @@ export default async function QRPage({ params }: { params: Promise<{ slug: strin
             className="p-2 bg-white rounded-lg border-4 border-gray-900"
             style={{ width: 300, height: 300 }}
           >
-            {/* Inline QR code from API - now uses real scannable QR library */}
+            {/* Demo businesses use pre-generated static SVGs; other slugs fall back to the QR API. */}
             <img 
-              src="/api/qr/[slug]"
-              alt={`QR code for ${businessName || slug}`}
+              src={qrImageUrl}
+              alt={`QR code for ${businessName || slugValue}`}
               style={{ width: '100%', height: '100%' }}
             />
           </div>

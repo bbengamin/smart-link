@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
       const bookingsComplete = filteredEvents.filter(e => e.event_type === 'booking_complete' && e.properties?.success === true);
       
       return NextResponse.json({
-        business_slug,
+        business_slug: businessSlug,
         total_page_views: pageViews.length,
         unique_visitors: new Set(pageViews.map(e => (e.properties as any).user_id || e.id)).size,
         bookings_started: bookingsStarted.length,
@@ -83,8 +83,9 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Missing business_slug' }, { status: 400 });
       }
       
+      const sourcePageViews = filteredEvents.filter(e => e.event_type === 'page_view');
       const sourceMap = new Map<string, number>();
-      pageViews.forEach(e => {
+      sourcePageViews.forEach(e => {
         const source = (e.properties as any).referrer || 'direct';
         sourceMap.set(source, (sourceMap.get(source) || 0) + 1);
       });
@@ -93,7 +94,7 @@ export async function GET(request: NextRequest) {
         .map(([name, count]) => ({ name, count }))
         .sort((a, b) => b.count - a.count);
       
-      return NextResponse.json({ business_slug, sources });
+      return NextResponse.json({ business_slug: businessSlug, sources });
       
     case 'clear':
       // Clear stored events (admin action)

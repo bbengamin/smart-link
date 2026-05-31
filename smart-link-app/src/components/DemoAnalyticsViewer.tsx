@@ -33,7 +33,9 @@ export default function DemoAnalyticsViewer() {
     dateSelected: events.filter(e => e.event_type === "funnel_date_selected").length,
     serviceSelected: events.filter(e => e.event_type === "funnel_service_selected").length,
     detailsEntered: events.filter(e => e.event_type === "funnel_details_entered").length,
-    bookingsCompleted: events.filter(e => e.event_type === "booking_complete" && events[event_idx]?.properties?.success).length,
+    bookingsCompleted: events.filter(
+      (event) => event.event_type === "booking_complete" && Boolean(event.properties?.success),
+    ).length,
   };
 
   return (

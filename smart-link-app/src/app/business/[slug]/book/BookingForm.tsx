@@ -69,6 +69,16 @@ function formatPrice(cents: number): string {
   return `$${(cents / 100).toFixed(2)}`;
 }
 
+function storeDemoBookingLocally(booking: Record<string, unknown>) {
+  try {
+    const existing = JSON.parse(localStorage.getItem("smart_link_bookings") || "[]") as Record<string, unknown>[];
+    existing.push(booking);
+    localStorage.setItem("smart_link_bookings", JSON.stringify(existing));
+  } catch (error) {
+    console.warn("[Demo] Failed to persist booking locally:", error);
+  }
+}
+
 function isDateDisabled(date: Date, minDate: Date, maxDate: Date, hours: BusinessHours): boolean {
   if (date < minDate || date > maxDate) return true;
   const dayKey = DAY_LABELS[date.getDay()].toLowerCase();
@@ -168,7 +178,7 @@ export function BookingForm({
     if (!selectedDate || !selectedTime || !selectedService) return;
     setIsSubmitting(true);
 
-    const result = await submitBooking({
+    const bookingPayload = {
       businessSlug,
       serviceId: selectedService.id || selectedService.name,
       serviceName: selectedService.name,
@@ -180,10 +190,21 @@ export function BookingForm({
       customerPhone,
       customerEmail,
       notes,
-    });
+    };
+
+    const result = await submitBooking(bookingPayload);
 
     setIsSubmitting(false);
     if (result.success) {
+      if (isDemo) {
+        storeDemoBookingLocally({
+          id: result.bookingId,
+          ...bookingPayload,
+          businessName,
+          status: "pending",
+          created_at: new Date().toISOString(),
+        });
+      }
       setBookingResult({ success: true, id: result.bookingId });
       setStep(3);
     } else {
@@ -337,61 +358,66 @@ export function BookingForm({
               Pick the service you'd like to book
             </p>
 
-            {timeSlots.length === 0 ? (
-              <div className="text-center py-8 text-gray-400">
-                <p className="text-4xl mb-3">📅</p>
-                <p>This business is closed on the selected day.</p>
-                <button
-                  onClick={() => setStep(0)}
-                  className="mt-3 text-blue-600 text-sm hover:underline"
-                >
-                  Choose a different date
-                </button>
-              </div>
-            ) : selectedService ? (
-              <>
-                {/* Time slots */}
-                <h3 className="text-sm font-medium text-gray-700 mb-3">Available Times</h3>
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-6">
-                  {timeSlots.map((time) => (
-                    <button
-                      key={time}
-                      onClick={() => setSelectedTime(time)}
-                      className={`
-                        py-2.5 px-3 rounded-xl text-sm font-medium border transition-all
-                        ${selectedTime === time
-                          ? "border-blue-500 bg-blue-50 text-blue-700"
-                          : "border-gray-100 bg-white text-gray-700 hover:border-gray-200 hover:bg-gray-50"
-                        }
-                      `}
-                    >
-                      {time}
-                    </button>
-                  ))}
+            {selectedService ? (
+              timeSlots.length === 0 ? (
+                <div className="text-center py-8 text-gray-400">
+                  <p className="text-4xl mb-3">📅</p>
+                  <p>No appointment times are available for this service on the selected day.</p>
+                  <button
+                    onClick={() => {
+                      setSelectedService(null);
+                      setSelectedTime(null);
+                    }}
+                    className="mt-3 text-blue-600 text-sm hover:underline"
+                  >
+                    Choose a different service
+                  </button>
                 </div>
-
-                {/* Selected service + back to services */}
-                <div className="mb-4 p-4 bg-blue-50 rounded-xl border border-blue-100">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-gray-900">{selectedService.name}</p>
-                      <p className="text-sm text-gray-500">
-                        {formatPrice(selectedService.price)} · {selectedService.duration_minutes} min
-                      </p>
-                    </div>
-                    <span className="text-sm font-medium text-blue-600">
-                      {selectedTime}
-                    </span>
+              ) : (
+                <>
+                  {/* Time slots */}
+                  <h3 className="text-sm font-medium text-gray-700 mb-3">Available Times</h3>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-6">
+                    {timeSlots.map((time) => (
+                      <button
+                        key={time}
+                        onClick={() => setSelectedTime(time)}
+                        className={`
+                          py-2.5 px-3 rounded-xl text-sm font-medium border transition-all
+                          ${selectedTime === time
+                            ? "border-blue-500 bg-blue-50 text-blue-700"
+                            : "border-gray-100 bg-white text-gray-700 hover:border-gray-200 hover:bg-gray-50"
+                          }
+                        `}
+                      >
+                        {time}
+                      </button>
+                    ))}
                   </div>
-                </div>
 
-                <button
-                  onClick={() => { setSelectedService(null); setSelectedTime(null); }}
-                  className="text-sm text-blue-600 hover:underline mb-4"
-                >
-                  ← Choose a different service
-                </button>
-              </>
+                  {/* Selected service + back to services */}
+                  <div className="mb-4 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium text-gray-900">{selectedService.name}</p>
+                        <p className="text-sm text-gray-500">
+                          {formatPrice(selectedService.price)} · {selectedService.duration_minutes} min
+                        </p>
+                      </div>
+                      <span className="text-sm font-medium text-blue-600">
+                        {selectedTime}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => { setSelectedService(null); setSelectedTime(null); }}
+                    className="text-sm text-blue-600 hover:underline mb-4"
+                  >
+                    ← Choose a different service
+                  </button>
+                </>
+              )
             ) : (
               <div className="space-y-2">
                 {services.map((service) => (

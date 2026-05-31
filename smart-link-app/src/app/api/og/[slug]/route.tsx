@@ -21,7 +21,15 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
-  let business: { name: string; description: string; category: string; city: string } | null = null;
+  let business: {
+    name: string;
+    description: string;
+    category: string;
+    city: string;
+    address: string;
+    state?: string;
+    zip?: string;
+  } | null = null;
 
   // Try demo data first
   const demo = getDemoBusiness(slug);
@@ -31,6 +39,9 @@ export async function GET(
       description: demo.description,
       category: demo.category,
       city: demo.city,
+      address: demo.address,
+      state: demo.state,
+      zip: demo.zip,
     };
   }
 
@@ -39,7 +50,7 @@ export async function GET(
     try {
       const { data: b } = await supabase
         .from("businesses")
-        .select("name,description,category,city")
+        .select("name,description,category,city,address,state,zip")
         .eq("slug", slug)
         .single();
       if (b) business = b;
@@ -54,9 +65,11 @@ export async function GET(
 
   const categoryEmoji = business.category === "salon" ? "💇" : "💈";
   const bgColor = business.category === "salon" ? "#7c3aed" : "#2563eb";
-  
+  const businessTypeLabel = business.category === "salon" ? "Salon" : "Barbershop";
+
   // Format address for local SEO visibility in OG image
   const formattedAddress = `${business.address}, ${business.city}, ${business.state} ${business.zip}`;
+  const formattedLocationLine = `${business.city} · ${businessTypeLabel}`;
 
   return new ImageResponse(
     (
@@ -76,6 +89,8 @@ export async function GET(
         <div style={{ fontSize: 80, marginBottom: 24 }}>{categoryEmoji}</div>
         <div
           style={{
+            display: "flex",
+            justifyContent: "center",
             fontSize: 52,
             fontWeight: 800,
             color: "white",
@@ -89,6 +104,8 @@ export async function GET(
         </div>
         <div
           style={{
+            display: "flex",
+            justifyContent: "center",
             fontSize: 28,
             fontWeight: 600,
             color: "rgba(255,255,255,0.9)",
@@ -97,10 +114,12 @@ export async function GET(
             textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
           }}
         >
-          {business.city} · {business.category === "salon" ? "Salon" : "Barbershop"}
+          {formattedLocationLine}
         </div>
         <div
           style={{
+            display: "flex",
+            justifyContent: "center",
             fontSize: 18,
             fontWeight: 500,
             color: "rgba(255,255,255,0.7)",
@@ -113,6 +132,8 @@ export async function GET(
         </div>
         <div
           style={{
+            display: "flex",
+            justifyContent: "center",
             fontSize: 16,
             color: "rgba(255,255,255,0.5)",
             textAlign: "center",
@@ -124,7 +145,9 @@ export async function GET(
         </div>
         <div
           style={{
-            marginTop: auto,
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "auto",
             padding: "10px 24px",
             borderRadius: 8,
             background: "rgba(255,255,255,0.1)",

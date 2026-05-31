@@ -5,6 +5,12 @@
  */
 
 import seedData from "@/data/seed.json";
+import {
+  type BusinessDiscoveryProfile,
+  getBusinessDiscoveryProfile,
+  getBusinessGeo as getDiscoveryGeo,
+  getBusinessSocials as getDiscoverySocials,
+} from "@/data/business-discovery";
 
 export interface DemoBusiness {
   slug: string;
@@ -63,14 +69,16 @@ export function getAverageRating(slug: string): number {
   return Math.round((sum / reviews.length) * 10) / 10;
 }
 
-export function getBusinessSocials(slug: string): { facebook?: string; instagram?: string; twitter?: string } {
-  const enhancments = socialEnhancements[slug as keyof typeof socialEnhancements];
-  return enhancements || {};
+export function getBusinessSocials(slug: string): {
+  facebook_url?: string;
+  instagram_url?: string;
+  twitter_url?: string;
+} {
+  return getDiscoverySocials(slug);
 }
 
 export function getBusinessGeo(slug: string): GeoCoordinates | null {
-  const enhanced = socialEnhancements[slug as keyof typeof socialEnhancements];
-  return enhanced?.geo || null;
+  return getDiscoveryGeo(slug);
 }
 
 export interface GeoCoordinates {
@@ -79,46 +87,6 @@ export interface GeoCoordinates {
   longitude: number;
 }
 
-interface SocialEnhancements {
-  [slug: string]: {
-    geo?: GeoCoordinates;
-    facebook_url?: string;
-    instagram_url?: string;
-    twitter_url?: string;
-  };
+export function getBusinessDiscovery(slug: string): BusinessDiscoveryProfile | null {
+  return getBusinessDiscoveryProfile(slug);
 }
-
-const socialEnhancements: SocialEnhancements = {
-  "cuts-barbershop": {
-    lat: 40.6782,
-    lng: -73.9442,
-    geo: {"@type": "GeoCoordinates", "latitude": 40.6782, "longitude": -73.9442},
-    facebook_url: "https://facebook.com/cutsbarbershop",
-    instagram_url: "https://instagram.com/cutsbarbershop",
-    twitter_url: ""
-  },
-  "luxe-salon": {
-    lat: 40.7589,
-    lng: -73.9851,
-    geo: {"@type": "GeoCoordinates", "latitude": 40.7589, "longitude": -73.9851},
-    facebook_url: "https://facebook.com/luxesalon",
-    instagram_url: "https://instagram.com/luxesalon",
-    twitter_url: "https://twitter.com/luxesalon"
-  },
-  "fresh-cuts-studio": {
-    lat: 40.7282,
-    lng: -73.7949,
-    geo: {"@type": "GeoCoordinates", "latitude": 40.7282, "longitude": -73.7949},
-    facebook_url: "",
-    instagram_url: "https://instagram.com/freshcutsstudio",
-    twitter_url: ""
-  },
-  "glow-hair-studio": {
-    lat: 40.7580,
-    lng: -73.9855,
-    geo: {"@type": "GeoCoordinates", "latitude": 40.7580, "longitude": -73.9855},
-    facebook_url: "https://facebook.com/glowhairstudio",
-    instagram_url: "https://instagram.com/glowhairstudio",
-    twitter_url: ""
-  }
-};

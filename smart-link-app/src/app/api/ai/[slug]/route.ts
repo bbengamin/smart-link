@@ -5,38 +5,20 @@
  */
 import { NextResponse } from "next/server";
 import { getDemoBusiness, getDemoServices } from "@/data/demo";
+import {
+  buildBusinessMapUrl,
+  getBusinessAreaServed,
+  getBusinessGeo,
+  getBusinessNeighborhood,
+  getBusinessSocials,
+} from "@/data/business-discovery";
 import { supabase } from "@/lib/supabase";
 
 // Route config
 export const runtime = "nodejs";
 export const dynamic = "force-static";
 
-// Per-business geo coordinates (inlined from demo.ts)
-const businessGeo: Record<string, { latitude: number; longitude: number }> = {
-  "cuts-barbershop": { latitude: 40.6782, longitude: -73.9442 },
-  "luxe-salon": { latitude: 40.7589, longitude: -73.9851 },
-  "fresh-cuts-studio": { latitude: 40.7282, longitude: -73.7949 },
-  "glow-hair-studio": { latitude: 40.7580, longitude: -73.9855 },
-};
 
-// Per-business social links (inlined from demo.ts)
-const businessSocials: Record<string, { facebook_url?: string; instagram_url?: string; twitter_url?: string }> = {
-  "cuts-barbershop": {
-    instagram_url: "https://instagram.com/cutsbarbershop",
-    twitter_url: "https://twitter.com/cutsbarbershop"
-  },
-  "luxe-salon": {
-    facebook_url: "https://facebook.com/luxesalon",
-    instagram_url: "https://instagram.com/luxesalon"
-  },
-  "fresh-cuts-studio": {
-    instagram_url: "https://instagram.com/freshcutsstudio"
-  },
-  "glow-hair-studio": {
-    facebook_url: "https://facebook.com/glowhairstudio",
-    twitter_url: "https://twitter.com/glowhairstudio"
-  }
-};
 
 // Generate static paths for demo businesses (all 4)
 export function generateStaticParams() {
@@ -60,16 +42,6 @@ function computeAggregateRating(business: any, source: "demo" | "supabase"): { r
   return { ratingValue: parseFloat((business.rating || 4.5).toString()), reviewCount: business.reviewCount || 127 };
 }
 
-// Get geo for a business slug
-function getBusinessGeo(slug: string): { latitude: number; longitude: number } | null {
-  return businessGeo[slug] || null;
-}
-
-// Get social links for a business slug
-function getBusinessSocials(slug: string): { facebook_url?: string; instagram_url?: string; twitter_url?: string } | null {
-  return businessSocials[slug] || null;
-}
-
 interface AIResponse {
   business: {
     name: string;
@@ -87,6 +59,10 @@ interface AIResponse {
     rating: number;
     reviewCount: number;
     priceRange: string;
+    neighborhood?: string;
+    areaServed?: string[];
+    bookingUrl?: string;
+    mapUrl?: string;
   };
   schema: {
     "@context": string;
@@ -110,6 +86,12 @@ interface AIResponse {
       latitude: number;
       longitude: number;
     };
+    areaServed?: Array<{
+      "@type": string;
+      name: string;
+    }>;
+    hasMap?: string;
+    mainEntityOfPage?: string;
     sameAs?: string[];
     openingHoursSpecification?: Array<{
       "@type": string;
@@ -191,6 +173,15 @@ export async function GET(
 
   const geo = getBusinessGeo(slug);
   const socials = getBusinessSocials(slug);
+  const neighborhood = getBusinessNeighborhood(slug);
+  const areaServed = getBusinessAreaServed(slug, business.city, business.state);
+  const bookingUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}/book`;
+  const mapUrl = buildBusinessMapUrl({
+    address: business.address,
+    city: business.city,
+    state: business.state,
+    zip: business.zip,
+  });
   
   const aggregate = computeAggregateRating(business, source);
 
@@ -217,6 +208,10 @@ export async function GET(
       rating: aggregate.ratingValue,
       reviewCount: aggregate.reviewCount,
       priceRange: "$$",
+      neighborhood,
+      areaServed,
+      bookingUrl,
+      mapUrl,
     },
     schema: {
       "@context": "https://schema.org",
@@ -235,9 +230,19 @@ export async function GET(
         postalCode: business.zip,
         addressCountry: "US",
       },
+      areaServed: areaServed.map((name) => ({
+        "@type": "City",
+        name,
+      })),
       ...(geo ? {
-        geo: geo,
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: geo.latitude,
+          longitude: geo.longitude,
+        },
       } : {}),
+      ...(mapUrl ? { hasMap: mapUrl } : {}),
+      mainEntityOfPage: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}`,
       sameAs: [
         ...(socials?.facebook_url ? [socials.facebook_url] : []),
         ...(socials?.instagram_url ? [socials.instagram_url] : []),

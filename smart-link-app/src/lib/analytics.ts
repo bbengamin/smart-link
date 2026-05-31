@@ -114,7 +114,7 @@ export async function onBookingSubmit(success: boolean, data?: any) {
   });
 }
 
-export function onContactClick(type: 'call' | 'email' | 'text') {
+export function onContactClick(type: 'call' | 'email' | 'text' | 'whatsapp' | 'directions') {
   track('contact_click', { type });
 }
 

@@ -113,6 +113,7 @@ export default function AdminDashboardPage() {
         </section>
 
         {/* Stats Grid */}
+        <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
           <StatCard label="Revenue (Month)" value={`$${stats.totalRevenue.toLocaleString()}`} icon="💰" accent="text-green-600" />
           <StatCard label="Bookings (Month)" value={String(stats.bookingsThisMonth)} icon="📅" accent="text-blue-600" />
           <StatCard label="Pending" value={String(stats.pendingBookings)} icon="⏳" accent="text-amber-600" />

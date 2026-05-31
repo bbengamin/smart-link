@@ -28,6 +28,80 @@ export interface BookingResult {
   error?: string;
 }
 
+interface TelegramOwnerAlertPayload {
+  bookingId: string;
+  businessName: string;
+  businessSlug: string;
+  serviceName: string;
+  servicePrice: number;
+  date: string;
+  time: string;
+  customerName: string;
+  customerPhone: string;
+  customerEmail: string;
+  notes: string;
+}
+
+function isDemoMode(): boolean {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  return !url || url.includes("placeholder") || url.includes("demo");
+}
+
+function getOptionalEnv(name: string): string | null {
+  const value = process.env[name]?.trim();
+  return value ? value : null;
+}
+
+async function sendTelegramOwnerAlert(payload: TelegramOwnerAlertPayload): Promise<void> {
+  const botToken = getOptionalEnv("TELEGRAM_BOT_TOKEN");
+  const chatId = getOptionalEnv("TELEGRAM_CHAT_ID");
+
+  if (!botToken || !chatId) {
+    console.info(
+      "Telegram owner alert skipped: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is not configured."
+    );
+    return;
+  }
+
+  const threadId = getOptionalEnv("TELEGRAM_THREAD_ID");
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app";
+  const bookingUrl = `${appUrl}/business/${payload.businessSlug}/book`;
+  const lines = [
+    "🔔 New Smart Link booking",
+    `Business: ${payload.businessName}`,
+    `Service: ${payload.serviceName} ($${(payload.servicePrice / 100).toFixed(2)})`,
+    `When: ${payload.date} at ${payload.time}`,
+    `Customer: ${payload.customerName}`,
+    payload.customerPhone ? `Phone: ${payload.customerPhone}` : null,
+    payload.customerEmail ? `Email: ${payload.customerEmail}` : null,
+    payload.notes ? `Notes: ${payload.notes}` : null,
+    `Booking ID: ${payload.bookingId}`,
+    `Open booking page: ${bookingUrl}`,
+  ].filter(Boolean);
+
+  const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      message_thread_id: threadId ? Number(threadId) : undefined,
+      text: lines.join("\n"),
+      disable_web_page_preview: true,
+    }),
+  });
+
+  let body: { ok?: boolean; description?: string } | null = null;
+  try {
+    body = (await response.json()) as { ok?: boolean; description?: string };
+  } catch {
+    body = null;
+  }
+
+  if (!response.ok || body?.ok === false) {
+    throw new Error(body?.description || `Telegram API returned HTTP ${response.status}`);
+  }
+}
+
 export async function submitBooking(
   data: BookingFormData
 ): Promise<BookingResult> {
@@ -39,28 +113,14 @@ export async function submitBooking(
     return { success: false, error: "Name is required" };
   }
 
-  const isDemo =
-    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder") ||
-    process.env.NEXT_PUBLIC_SUPABASE_URL.includes("demo");
+  const isDemo = isDemoMode();
 
   if (isDemo) {
-    // Demo mode: store in localStorage for visibility
-    try {
-      const existing = JSON.parse(localStorage.getItem("smart_link_bookings") || "[]");
-      const booking = {
-        id: crypto.randomUUID(),
-        ...data,
-        status: "pending" as const,
-        created_at: new Date().toISOString(),
-      };
-      existing.push(booking);
-      localStorage.setItem("smart_link_bookings", JSON.stringify(existing));
-      console.log("[Demo] Booking saved:", booking);
-    } catch (e) {
-      console.error("[Demo] Failed to save booking:", e);
-    }
-    return { success: true, bookingId: "demo-" + crypto.randomUUID() };
+    const bookingId = `demo-${crypto.randomUUID()}`;
+    console.info(
+      "[Demo] Booking accepted without external delivery. Client-side demo storage and owner follow-up are expected."
+    );
+    return { success: true, bookingId };
   }
 
   // Live mode: insert into Supabase
@@ -73,7 +133,7 @@ export async function submitBooking(
 
     const { data: business, error: bizErr } = await supabase
       .from("businesses")
-      .select("id")
+      .select("id, name")
       .eq("slug", data.businessSlug)
       .single();
 
@@ -100,6 +160,24 @@ export async function submitBooking(
     if (insertErr) {
       console.error("Booking insert error:", insertErr);
       return { success: false, error: "Failed to create booking" };
+    }
+
+    try {
+      await sendTelegramOwnerAlert({
+        bookingId: booking.id,
+        businessName: business.name || data.businessSlug,
+        businessSlug: data.businessSlug,
+        serviceName: data.serviceName,
+        servicePrice: data.servicePrice,
+        date: data.date,
+        time: data.time,
+        customerName: data.customerName.trim(),
+        customerPhone: data.customerPhone,
+        customerEmail: data.customerEmail,
+        notes: data.notes,
+      });
+    } catch (telegramErr) {
+      console.warn("Telegram owner alert failed (non-fatal):", telegramErr);
     }
 
     // Send confirmation SMS via Twilio

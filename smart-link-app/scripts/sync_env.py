@@ -25,6 +25,14 @@ REQUIRED_KEYS = [
     'TWILIO_PHONE_NUMBER',
 ]
 
+OPTIONAL_KEYS = [
+    'DATABASE_URL',
+    'TWILIO_API_ACCOUNT_SID',
+    'TELEGRAM_BOT_TOKEN',
+    'TELEGRAM_CHAT_ID',
+    'TELEGRAM_THREAD_ID',
+]
+
 SOURCE_PREFERENCE = {
     'NEXT_PUBLIC_SUPABASE_URL': [
         'SMART_LINK_NEXT_PUBLIC_SUPABASE_URL',
@@ -62,6 +70,18 @@ SOURCE_PREFERENCE = {
     'TWILIO_PHONE_NUMBER': [
         'SMART_LINK_TWILIO_PHONE_NUMBER',
         'TWILIO_PHONE_NUMBER',
+    ],
+    'TELEGRAM_BOT_TOKEN': [
+        'SMART_LINK_TELEGRAM_BOT_TOKEN',
+        'TELEGRAM_BOT_TOKEN',
+    ],
+    'TELEGRAM_CHAT_ID': [
+        'SMART_LINK_TELEGRAM_CHAT_ID',
+        'TELEGRAM_CHAT_ID',
+    ],
+    'TELEGRAM_THREAD_ID': [
+        'SMART_LINK_TELEGRAM_THREAD_ID',
+        'TELEGRAM_THREAD_ID',
     ],
 }
 
@@ -226,6 +246,18 @@ def build_env(high: Dict[str, str], existing: Dict[str, str]) -> Tuple[Dict[str,
                 resolved[target_key] = existing[target_key]
                 report[target_key] = 'kept existing app value'
 
+    for target_key in OPTIONAL_KEYS:
+        for source_key in SOURCE_PREFERENCE.get(target_key, [target_key]):
+            value = high.get(source_key)
+            if value:
+                resolved[target_key] = value
+                report[target_key] = f'copied from {source_key}'
+                break
+        else:
+            if existing.get(target_key):
+                resolved[target_key] = existing[target_key]
+                report[target_key] = 'kept existing app value'
+
     derive_supabase(high, resolved, report)
     derive_twilio(high, resolved, report)
 
@@ -261,6 +293,13 @@ def write_env(path: Path, values: Dict[str, str]) -> None:
         '# --- Twilio ---',
     ])
     for key in ['TWILIO_ACCOUNT_SID', 'TWILIO_AUTH_TOKEN', 'TWILIO_API_ACCOUNT_SID', 'TWILIO_PHONE_NUMBER']:
+        if values.get(key):
+            lines.append(env_line(key, values[key]))
+    lines.extend([
+        '',
+        '# --- Telegram owner alerts ---',
+    ])
+    for key in ['TELEGRAM_BOT_TOKEN', 'TELEGRAM_CHAT_ID', 'TELEGRAM_THREAD_ID']:
         if values.get(key):
             lines.append(env_line(key, values[key]))
     lines.append('')

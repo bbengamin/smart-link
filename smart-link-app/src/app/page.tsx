@@ -6,6 +6,17 @@ export const metadata: Metadata = {
   title: "Smart Link — Smart Business Links for Local Companies",
   description:
     "Give your business a smart link that books customers, manages clients, and indexes itself to AI. Free for barbershops, salons, and local services.",
+  keywords: [
+    "smart business link",
+    "AI-ready business profile",
+    "barbershop booking link",
+    "salon booking link",
+    "local business discovery",
+    "business profile for AI search",
+  ],
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -15,7 +26,7 @@ export const metadata: Metadata = {
       "Give your business a smart link that books customers, manages clients, and indexes itself to AI.",
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/og/smart-link.jpg`,
+        url: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/api/og/home`,
         width: 1200,
         height: 630,
         alt: "Smart Link — Smart Business Links for Local Companies",
@@ -28,6 +39,7 @@ export const metadata: Metadata = {
     description:
       "One link for your business — booking, contact info, reviews, and more.",
     site: "@SmartLinkApp",
+    images: [`${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/api/og/home`],
   },
 };
 

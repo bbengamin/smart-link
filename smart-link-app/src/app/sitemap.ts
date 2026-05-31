@@ -60,6 +60,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: "daily",
             priority: 0.8,
           });
+          entries.push({
+            url: `${APP_URL}/api/ai/${biz.slug}`,
+            lastModified: biz.updated_at
+              ? new Date(biz.updated_at)
+              : new Date("2026-05-29"),
+            changeFrequency: "weekly",
+            priority: 0.4,
+          });
         });
       }
     } catch {
@@ -80,6 +88,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: new Date("2026-05-29"),
         changeFrequency: "daily",
         priority: 0.8,
+      });
+      entries.push({
+        url: `${APP_URL}/api/ai/${biz.slug}`,
+        lastModified: new Date("2026-05-29"),
+        changeFrequency: "weekly",
+        priority: 0.4,
       });
     }
   });
