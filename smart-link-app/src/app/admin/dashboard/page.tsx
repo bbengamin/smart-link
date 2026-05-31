@@ -4,7 +4,7 @@
  * Demo mode uses mock data; live mode will query Supabase.
  */
 
-import { mockBookings, mockStats, type MockBooking } from "@/data/mock-dashboard";
+import { mockBookings, mockStats } from "@/data/mock-dashboard";
 import Link from "next/link";
 import { DemoAnalyticsDashboard } from "@/components/BusinessAnalyticsDashboard";
 
@@ -57,6 +57,12 @@ function MiniBar({ count, max }: { count: number; max: number }) {
 
 export default function AdminDashboardPage() {
   const businessSlug = process.env.NEXT_PUBLIC_SL_BUSINESS_SLUG || "cuts-barbershop";
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const isDemoMode =
+    !supabaseUrl ||
+    supabaseUrl.includes("placeholder") ||
+    supabaseUrl.includes("demo") ||
+    supabaseUrl === "";
   const stats = mockStats;
   const bookings = mockBookings;
   const maxDayCount = Math.max(...stats.bookingsByDay.map((d) => d.count));
@@ -83,12 +89,14 @@ export default function AdminDashboardPage() {
             >
               View Public Page →
             </a>
-            <Link
-              href="/demo/bookings"
-              className="text-sm text-gray-500 hover:text-gray-700"
-            >
-              Demo Bookings
-            </Link>
+            {isDemoMode ? (
+              <Link
+                href="/demo/bookings"
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
+                Demo Bookings
+              </Link>
+            ) : null}
             <Link
               href="/admin/clients"
               className="text-sm text-gray-500 hover:text-gray-700"
@@ -141,9 +149,15 @@ export default function AdminDashboardPage() {
           <section className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg font-semibold text-gray-900">Recent Bookings</h2>
-              <Link href="/demo/bookings" className="text-sm text-blue-600 hover:underline">
-                View All →
-              </Link>
+              {isDemoMode ? (
+                <Link href="/demo/bookings" className="text-sm text-blue-600 hover:underline">
+                  View All →
+                </Link>
+              ) : (
+                <span className="text-sm text-gray-500">
+                  Live bookings appear here from your database.
+                </span>
+              )}
             </div>
             <div className="space-y-3">
               {bookings.map((booking) => (
@@ -192,25 +206,19 @@ export default function AdminDashboardPage() {
         </section>
 
         {/* Quick Actions */}
-        <section className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <a
-            href="/business/cuts-barbershop/book"
+        <section className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Link
+            href={`/business/${businessSlug}/book`}
             className="flex items-center justify-center gap-2 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl font-semibold shadow-sm transition-colors"
           >
             📅 New Booking
-          </a>
-          <a
-            href="#clients"
+          </Link>
+          <Link
+            href="/admin/clients"
             className="flex items-center justify-center gap-2 py-4 bg-white hover:bg-gray-50 text-gray-700 rounded-2xl font-semibold border border-gray-100 shadow-sm transition-colors"
           >
             👥 Client List
-          </a>
-          <a
-            href="#settings"
-            className="flex items-center justify-center gap-2 py-4 bg-white hover:bg-gray-50 text-gray-700 rounded-2xl font-semibold border border-gray-100 shadow-sm transition-colors"
-          >
-            ⚙️ Settings
-          </a>
+          </Link>
         </section>
 
         {/* Footer */}
