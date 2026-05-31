@@ -13,32 +13,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];
 
   // Static pages
-  entries.push(
-    {
-      url: APP_URL,
-      lastModified: new Date("2026-05-29"),
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    {
-      url: `${APP_URL}/about`,
-      lastModified: new Date("2026-05-29"),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${APP_URL}/pricing`,
-      lastModified: new Date("2026-05-29"),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${APP_URL}/blog`,
-      lastModified: new Date("2026-05-29"),
-      changeFrequency: "weekly",
-      priority: 0.7,
-    },
-  );
+  entries.push({
+    url: APP_URL,
+    lastModified: new Date("2026-05-29"),
+    changeFrequency: "weekly",
+    priority: 1.0,
+  });
 
   // Business profile pages
   if (isLiveMode()) {
