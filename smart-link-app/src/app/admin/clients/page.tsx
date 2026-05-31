@@ -1,8 +1,11 @@
+"use client";
+
 /**
  * Client List View — Admin page showing all clients with booking history.
  * Demo mode uses mock data; live mode will query Supabase.
  */
 
+import { useMemo, useState } from "react";
 import { mockClients, type MockClient } from "@/data/mock-clients";
 import Link from "next/link";
 
@@ -23,7 +26,10 @@ function StatusBadge({ status }: { status: string }) {
 
 function ClientRow({ client }: { client: MockClient }) {
   return (
-    <div className="flex items-center justify-between py-4 px-5 rounded-xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all">
+    <div
+      data-client-status={client.status}
+      className="flex items-center justify-between py-4 px-5 rounded-xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all"
+    >
       <div className="flex items-center gap-4 min-w-0 flex-1">
         <div className="w-11 h-11 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold shrink-0">
           {client.name.split(" ").map((n) => n[0]).join("")}
@@ -69,9 +75,23 @@ function ClientRow({ client }: { client: MockClient }) {
 
 export default function ClientListView() {
   const clients = mockClients;
+  const [activeFilter, setActiveFilter] = useState<"all" | MockClient["status"]>("all");
   const totalRevenue = clients.reduce((sum, c) => sum + c.totalSpent, 0);
   const activeClients = clients.filter((c) => c.status === "active").length;
   const newClients = clients.filter((c) => c.status === "new").length;
+  const filteredClients = useMemo(() => {
+    if (activeFilter === "all") {
+      return clients;
+    }
+
+    return clients.filter((client) => client.status === activeFilter);
+  }, [activeFilter, clients]);
+  const filters: Array<{ label: string; value: "all" | MockClient["status"] }> = [
+    { label: "All", value: "all" },
+    { label: "Active", value: "active" },
+    { label: "New", value: "new" },
+    { label: "Inactive", value: "inactive" },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -128,23 +148,30 @@ export default function ClientListView() {
         {/* Filter Tabs */}
         <div className="flex items-center gap-2 mb-6">
           <span className="text-sm font-medium text-gray-500 mr-2">Filter:</span>
-          {["All", "Active", "New", "Inactive"].map((filter) => (
-            <button
-              key={filter}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                filter === "All"
-                  ? "bg-gray-900 text-white"
-                  : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
+          {filters.map((filter) => {
+            const isActive = filter.value === activeFilter;
+
+            return (
+              <button
+                key={filter.value}
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setActiveFilter(filter.value)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  isActive
+                    ? "bg-gray-900 text-white"
+                    : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                }`}
+              >
+                {filter.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* Client List */}
         <section className="space-y-3">
-          {clients.map((client) => (
+          {filteredClients.map((client) => (
             <ClientRow key={client.id} client={client} />
           ))}
         </section>
