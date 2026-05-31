@@ -102,7 +102,7 @@ Goal: 10–15 minutes. Show the loop, get approval, don't drown them.
 "Some customers are ready to book right now. They hit the booking flow. Others still want to ask a question first. They use the contact option. That's fine — the win is that both paths start from one link instead of getting lost across channels."
 
 ### 4) Show the owner dashboard loop
-"On your side, the dashboard answers the practical questions: how many people visited, which source they came from, whether they started booking, and what turned into real appointments. So instead of guessing whether Instagram or Google is doing anything, you can see it."
+"On your side, the dashboard is where this should land: visits, source tags, and booking activity in one place. In the current MVP, that dashboard is still a demo/operator view, not proven live reporting yet — but it shows the exact loop we want to make real for the pilot. So instead of guessing whether Instagram or Google is doing anything, you get one place to check."
 
 ### 5) Explain distribution surfaces
 "Once this is approved, we put the same smart link everywhere people already find you: Google Business Profile, Instagram bio, a QR code at the counter, and direct WhatsApp/SMS messages. Same destination, cleaner customer path."
