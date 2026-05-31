@@ -89,6 +89,29 @@ Use this as the bare-minimum onboarding form or call script:
 - Biggest pain right now (missed calls, no-shows, empty slots, too many DMs, etc.)
 - Approval contact for launch
 
+## Current verified public demo routes
+Verified on 2026-05-31 from the atomic production smoke check.
+
+Public alias confirmed healthy:
+- Base URL: `https://smart-link-mu.vercel.app/`
+- Demo business profile: `https://smart-link-mu.vercel.app/business/cuts-barbershop`
+- Booking entry: `https://smart-link-mu.vercel.app/business/cuts-barbershop/book`
+- AI business JSON: `https://smart-link-mu.vercel.app/api/ai/cuts-barbershop`
+- Sitemap: `https://smart-link-mu.vercel.app/sitemap.xml`
+- Robots: `https://smart-link-mu.vercel.app/robots.txt`
+
+Exact routes checked and verified:
+- `/` returned 200 with Smart Link page content.
+- `/business/cuts-barbershop` returned 200 with the Cut's Barbershop demo profile.
+- `/business/cuts-barbershop/book` returned 200 with booking-related page content.
+- `/api/ai/cuts-barbershop` returned 200 with the expected business JSON payload.
+- `/sitemap.xml` returned 200 and served valid XML.
+- `/robots.txt` returned 200 and served crawler directives.
+
+Current caveat:
+- The production Vercel alias is healthy, but sitemap `loc` entries point at `https://smartlink.app`. Do not claim the custom domain was freshly smoke-tested from this check unless that domain itself gets verified separately.
+- The owner dashboard/reporting story is still MVP/demo-level, not proven live business reporting. Keep that language honest in calls.
+
 ## Demo script for the first owner call
 Goal: 10–15 minutes. Show the loop, get approval, don't drown them.
 
@@ -168,10 +191,12 @@ Once a prospect says "send info" or agrees to a call:
 1. send the pilot offer;
 2. send the intake questions above;
 3. book the 10–15 minute onboarding/demo call;
-4. prepare a preview link before the call if enough info is available.
+4. prepare a preview link before the call if enough info is available;
+5. right after the call, capture the outcome in `docs/pilot-feedback-loop.md` + `docs/pilot-demo-feedback.csv`.
 
 ## References
 - `mvp-pilot-offer.md`
 - `docs/pilot-outreach.md`
 - `docs/distribution-surfaces.md`
 - `docs/analytics-mvp-schema.md`
+- `docs/pilot-feedback-loop.md`

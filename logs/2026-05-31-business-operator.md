@@ -1,31 +1,28 @@
-# 2026-05-31 Business Operator Tick
+# Smart Link Business Operator Run — 2026-05-31
 
 ## Pre-flight
-- Read `/opt/data/autonomous/smart-link/plan.md`.
-- Inspected live `smart-link` Kanban board, not stale local mirrors.
-- Reviewed recent context from the Smart Link Worker and Process Retro cron outputs.
-- Checked for existing owner/operator status-reporting artifacts; found only in-app/dashboard references and the plan's owner-visibility rule, no dedicated business-operator snapshot.
+- Read `plan.md`.
+- Inspected live `smart-link` Kanban board state.
+- Reviewed injected prior cron outputs from the process retro and hourly worker.
+- Read business-facing artifacts: `docs/pilot-outreach.md`, `docs/pilot-onboarding-handoff.md`, `docs/pilot-feedback-loop.md`, `docs/business-operator-status.md`, and `mvp-pilot-offer.md`.
 
-## Board state observed
-- Live board is active but has no ready/running delivery lane at inspection time.
-- Many product/process/business lanes are already represented: deployment, visibility, QR/distribution, analytics, reporting, pricing, outreach, onboarding, and feedback.
-- Several important cards are blocked by worker crashes, protocol violations, spawn failure, deployment/public URL verification, or human/account-access issues.
-- Outreach produced a first 5-shop pilot packet; onboarding and feedback have fallback docs created, but the operator still lacks a single status cockpit tying the business state together.
+## Board state assessed
+- Product/project board is active, not stalled.
+- Ready queue exists: `t_e71aa0b2` and `t_c0d4a87f`.
+- Running lane exists: `t_4e8fd87e` repo sync.
+- Several QA/runtime blockers remain, but they are lane-local rather than full-business blockers.
+- Business lanes already represented/done: analytics/reporting, pricing/offer, outreach prospect list, onboarding handoff, and pilot feedback loop.
 
 ## Gap found
-Smart Link has product-facing analytics/reporting, but not owner/operator visibility for running the business itself: deployment truth, board health, pilot readiness, next human action, blockers, and unblocked next moves in one place.
+The biggest business-level gap is not another broad strategy lane. It is offer truthfulness before first outreach: `mvp-pilot-offer.md` is now stale against current deployment notes and overstates parts of the MVP (real-time dashboard / notifications) relative to what is honestly proven. That can poison the first prospect conversation fast.
 
 ## Action taken
-Created Kanban card `t_3412522e` on board `smart-link`:
+- Created Kanban card `t_d874fcb3`: `Offer: reconcile pilot promise with verified live URL and MVP limits before outreach`.
+- Patched `plan.md` Next Steps to remove stale Resend-key guidance and replace it with the real human next action: verify/send the first Gerritsen outreach touch, while keeping URL/dashboard claims honest.
 
-**Reporting: create weekly business-operator status snapshot**
+## Files changed
+- `plan.md`
+- `logs/2026-05-31-business-operator.md`
 
-Outcome requested: a lightweight `docs/business-operator-status.md` or dated log/report that summarizes live URL truth, board counts, blockers, pilot readiness, outreach next action, analytics readiness, and the next 1-3 unblocked moves. Explicitly scoped as an operator artifact, not product code and not another vague strategy essay.
-
-## Plan update
-No `plan.md` patch needed. The plan already contains the business-improvement and owner-visibility rule; the missing piece was an executable card.
-
-## Blockers worth human attention
-- Public deployment URL remains untrusted/blocked until a production URL is verified against the real project repo.
-- Pilot outreach is prepared, but first contact still requires a human to verify and send the first DM/email.
-- Worker/runtime instability continues to block or poison otherwise small cards; process cards have addressed some of this, but the board still shows fallout.
+## Human attention
+The only business blocker worth the owner's attention right now: approve/send the first outreach touch to Gerritsen Barber Shop & Hair Salon after manually verifying the Instagram/email contact.

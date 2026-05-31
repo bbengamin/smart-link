@@ -3,6 +3,10 @@
 Date: 2026-05-30
 Scope: first pilot conversations only. This is a lightweight notes template for the first 5-shop outreach wave, not a baby CRM wearing fake glasses.
 
+Pair this with:
+- `docs/pilot-feedback-loop.md` for the post-demo question set and disposition taxonomy
+- `docs/pilot-demo-feedback.csv` for the row-per-demo tracker
+
 ## How to use this
 - Make one copy of the "Call notes card" section per prospect.
 - Keep answers short and concrete.
@@ -17,6 +21,14 @@ Scope: first pilot conversations only. This is a lightweight notes template for 
 - `pilot_candidate` — good fit, waiting on assets or approval
 - `not_now` — soft no, follow up later
 - `declined` — hard no
+
+## Post-demo disposition taxonomy
+Use this after the actual demo/feedback conversation so the first 5 shops can be compared cleanly:
+- `interested`
+- `needs_later_follow_up`
+- `price_objection`
+- `feature_blocker`
+- `not_icp`
 
 ## Source tag options
 Use the same source language as the outreach packet when possible:
@@ -82,6 +94,7 @@ Use the same source language as the outreach packet when possible:
 - Best sign of interest:
 - Biggest risk to closing this pilot:
 - Follow-up status:
+- Post-demo disposition:
 - Next action:
 - Next action due date:
 
