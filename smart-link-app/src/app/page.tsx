@@ -1,9 +1,44 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { getAllDemoBusinesses } from "@/data/demo";
+
+export const metadata: Metadata = {
+  title: "Smart Link — Smart Business Links for Local Companies",
+  description:
+    "Give your business a smart link that books customers, manages clients, and indexes itself to AI. Free for barbershops, salons, and local services.",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Smart Link",
+    title: "Smart Link — Smart Business Links for Local Companies",
+    description:
+      "Give your business a smart link that books customers, manages clients, and indexes itself to AI.",
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/og/smart-link.jpg`,
+        width: 1200,
+        height: 630,
+        alt: "Smart Link — Smart Business Links for Local Companies",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Smart Link — Smart Business Links",
+    description:
+      "One link for your business — booking, contact info, reviews, and more.",
+    site: "@SmartLinkApp",
+  },
+};
+
 export default function HomePage() {
+  const demoBusinesses = getAllDemoBusinesses();
+
   return (
-    <main className="mx-auto max-w-4xl px-6 py-20">
+    <main className="mx-auto max-w-5xl px-6 py-16 sm:py-24">
       {/* Hero */}
       <div className="text-center">
-        <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+        <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
           Your business deserves a{" "}
           <span className="text-blue-600">smart link</span>
         </h1>
@@ -13,108 +48,145 @@ export default function HomePage() {
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <a
-            href="#signup"
+            href="#demo"
             className="rounded-full bg-blue-600 px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors"
           >
-            Get Started Free
+            View Demo
           </a>
           <a
-            href="#demo"
+            href="#features"
             className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
           >
-            View Demo →
+            Learn more →
           </a>
         </div>
       </div>
 
-      {/* Features */}
-      <section className="mt-24 grid grid-cols-1 gap-8 sm:grid-cols-3">
-        <div className="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
-          <div className="text-3xl">📅</div>
-          <h3 className="mt-4 text-lg font-semibold text-gray-900">
-            Online Booking
-          </h3>
-          <p className="mt-2 text-base text-gray-600">
-            Customers book appointments 24/7. No more phone tag.
-          </p>
-        </div>
-        <div className="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
-          <div className="text-3xl">🤖</div>
-          <h3 className="mt-4 text-lg font-semibold text-gray-900">
-            AI-Indexed
-          </h3>
-          <p className="mt-2 text-base text-gray-600">
-            Your profile is structured for AI agents to find and recommend you.
-          </p>
-        </div>
-        <div className="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
-          <div className="text-3xl">📊</div>
-          <h3 className="mt-4 text-lg font-semibold text-gray-900">
-            Simple CRM
-          </h3>
-          <p className="mt-2 text-base text-gray-600">
-            Track clients, history, and preferences in one place.
-          </p>
+      {/* Demo Preview */}
+      <section id="demo" className="mt-20">
+        <h2 className="text-center text-2xl font-bold text-gray-900 mb-8">
+          Live Demo — Try It Now
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {demoBusinesses.map((biz) => (
+            <Link
+              key={biz.slug}
+              href={`/business/${biz.slug}`}
+              className="block rounded-2xl bg-white p-6 shadow-sm border border-gray-100 hover:shadow-md hover:border-blue-200 transition-all group"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-2xl text-white font-bold shrink-0">
+                  {biz.name.charAt(0)}
+                </div>
+                <div className="min-w-0">
+                  <h3 className="font-bold text-lg text-gray-900 truncate group-hover:text-blue-600 transition-colors">
+                    {biz.name}
+                  </h3>
+                  <p className="text-gray-400 text-sm">
+                    {biz.city}{biz.state ? `, ${biz.state}` : ""}
+                  </p>
+                </div>
+              </div>
+              <p className="text-sm text-gray-500 mb-4 line-clamp-2">
+                {biz.description}
+              </p>
+              <div className="flex items-center gap-3 text-sm text-blue-600 font-medium">
+                View Profile →
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
-      {/* Demo Preview */}
-      <section
-        id="demo"
-        className="mt-24 rounded-2xl bg-white p-8 shadow-lg border border-gray-100"
-      >
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          Preview: What a Smart Link looks like
+      {/* Features */}
+      <section id="features" className="mt-28">
+        <h2 className="text-center text-3xl font-bold text-gray-900 mb-4">
+          Everything your business needs
         </h2>
-        <div className="rounded-xl bg-gray-900 p-6 text-white max-w-sm mx-auto">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-2xl">
-              ✂️
+        <p className="text-center text-gray-500 mb-12 max-w-xl mx-auto">
+          Stop managing bookings by phone. One smart link handles it all.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
+            <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-2xl mb-4">
+              📅
             </div>
-            <div>
-              <h3 className="font-bold text-lg">Cut's Barbershop</h3>
-              <p className="text-gray-400 text-sm">
-                ⭐ 4.9 (127 reviews) · Open now
-              </p>
-            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Online Booking
+            </h3>
+            <p className="text-base text-gray-600">
+              Customers book appointments 24/7. No more phone tag or double
+              bookings.
+            </p>
           </div>
-          <p className="text-sm text-gray-300 mb-4">
-            Premium cuts, fades & beard trims. Walk-ins welcome.
-          </p>
-          <div className="space-y-2 mb-4">
-            <div className="flex justify-between text-sm">
-              <span>Haircut</span>
-              <span className="text-gray-400">$30 · 30min</span>
+          <div className="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
+            <div className="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-2xl mb-4">
+              🤖
             </div>
-            <div className="flex justify-between text-sm">
-              <span>Fade + Beard</span>
-              <span className="text-gray-400">$45 · 45min</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span>Beard Trim</span>
-              <span className="text-gray-400">$20 · 20min</span>
-            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              AI-Indexed
+            </h3>
+            <p className="text-base text-gray-600">
+              Your profile is structured for AI agents to find, understand, and
+              recommend you.
+            </p>
           </div>
-          <button className="w-full bg-blue-600 hover:bg-blue-500 text-white py-2.5 rounded-lg text-sm font-semibold transition-colors">
-            Book Appointment
-          </button>
-          <div className="mt-4 flex justify-center gap-3">
-            <button className="text-gray-400 hover:text-white text-sm">
-              📞 Call
-            </button>
-            <button className="text-gray-400 hover:text-white text-sm">
-              💬 WhatsApp
-            </button>
-            <button className="text-gray-400 hover:text-white text-sm">
-              📍 Directions
-            </button>
+          <div className="rounded-2xl bg-white p-8 shadow-sm border border-gray-100">
+            <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-2xl mb-4">
+              📊
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Simple CRM
+            </h3>
+            <p className="text-base text-gray-600">
+              Track clients, history, and preferences in one place. No spreadsheets needed.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="mt-28">
+        <h2 className="text-center text-3xl font-bold text-gray-900 mb-12">
+          How it works
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div>
+            <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
+              1
+            </div>
+            <h3 className="font-semibold text-gray-900 mb-2">Create Your Link</h3>
+            <p className="text-gray-500 text-sm">
+              Sign up, add your services and hours. Takes 2 minutes.
+            </p>
+          </div>
+          <div>
+            <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
+              2
+            </div>
+            <h3 className="font-semibold text-gray-900 mb-2">Share Everywhere</h3>
+            <p className="text-gray-500 text-sm">
+              Put your link on Instagram, business cards, receipts — anywhere.
+            </p>
+          </div>
+          <div>
+            <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
+              3
+            </div>
+            <h3 className="font-semibold text-gray-900 mb-2">Get Booked</h3>
+            <p className="text-gray-500 text-sm">
+              Customers book, pay deposits, and get SMS confirmations automatically.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="mt-24 text-center text-sm text-gray-500">
-        <p>© 2026 Smart Link. Built for local businesses.</p>
+      <footer className="mt-28 text-center text-sm text-gray-400 pt-8 border-t border-gray-100">
+        <p className="mb-2">© 2026 Smart Link. Built for local businesses.</p>
+        <a href="/demo/bookings" className="text-blue-600 hover:underline">
+          View Demo Bookings →
+        </a>
       </footer>
     </main>
   );

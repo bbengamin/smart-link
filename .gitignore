@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+.env*
+.vercel/
+
+# venv (Python)
+.venv/
+*.pyc
+__pycache__/
+
+# build outputs
+.next/
+build/
+dist/
+
+# local worker/project state
+.kanbani/
+test-qr.png
+
+# OS files
+.DS_Store
+Thumbs.db
+.vercel

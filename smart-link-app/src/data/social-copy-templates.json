@@ -1,0 +1,95 @@
+{
+  "instagram_bio": {
+    "description": "MVP Instagram bio templates for local businesses",
+    "templates": [
+      {
+        "name": "barbershop-standard",
+        "text": "💇 Cuts & Shaves | ✂️ Traditional & Modern Styles\n📍 {{location}}\n⏰ Open: {{hours}}\n👇 Book your appointment"
+      },
+      {
+        "name": "barbershop-minimal",
+        "text": "Classic cuts. Fresh fades. Great vibes.\n📍 {{location}} | ⏰ {{hours}}"
+      },
+      {
+        "name": "salon-standard",
+        "text": "✨ Hair Styling & Coloring\n💆 Facials & Spa Treatments\n📞 {{phone}}\n🌐 {{website}}"
+      },
+      {
+        "name": "salon-minimal",
+        "text": "Your hair, our art. Book now!"
+      }
+    ]
+  },
+  "whatsapp_sms": {
+    "description": "WhatsApp/SMS greeting templates for bookings",
+    "templates": [
+      {
+        "name": "greeting-standard",
+        "text": "Hi {{name}}! Thanks for booking with us at {{business_name}}. We've got you down for {{date}} at {{time}}. Reply CONFIRM to confirm or let us know if you need to reschedule! 😊"
+      },
+      {
+        "name": "greeting-casual",
+        "text": "Hey {{name}}! You're all set for your appointment at {{business_name}}. See you on {{date}}!"
+      },
+      {
+        "name": "reminder-24h",
+        "text": "Just a friendly reminder: your appointment at {{business_name}} is tomorrow at {{time}}! 📍 Located at {{address}}"
+      },
+      {
+        "name": "reminder-hour-of",
+        "text": "Your appointment starts in 1 hour! Looking forward to seeing you. Need help parking or have questions? Reply anytime!"
+      }
+    ]
+  },
+  "google_maps": {
+    "description": "Google Maps profile snippet templates",
+    "templates": [
+      {
+        "name": "barbershop-standard",
+        "text": "Professional barbershop offering classic cuts, shaves, and hot towel services. Walk-ins welcome or book online. Gift cards available!"
+      },
+      {
+        "name": "salon-standard",
+        "text": "Full-service salon specializing in hair styling, coloring, and skincare treatments. Experienced stylists on every team."
+      },
+      {
+        "name": "spa-standard",
+        "text": "Relaxing spa services including facials, massages, and body treatments. Book your treatment today!"
+      }
+    ]
+  },
+  "website_embed": {
+    "description": "Website embed/handoff snippets for business profiles",
+    "templates": [
+      {
+        "name": "hero-banner",
+        "text": "Premium hair and grooming services in the heart of {{neighborhood}}. Book your appointment online or call us!"
+      },
+      {
+        "name": "cta-button-text",
+        "text": "Book Appointment →"
+      },
+      {
+        "name": "social-follow",
+        "text": "Follow us on Instagram | Facebook | Twitter\n#{{business_name}} {{city}}"
+      }
+    ]
+  },
+  "handoff_templates": {
+    "description": "Handoff snippets for business profile setup",
+    "fields": [
+      {
+        "name": "brand_voice",
+        "options": ["professional", "casual", "witty", "luxury", "friendly"],
+        "default": "friendly"
+      },
+      {
+        "name": "tone",
+        "options": ["warm", "energetic", "minimalist", "playful"],
+        "default": "warm"
+      }
+    ],
+    "default_greeting": "Hey! We're {{business_name}} and we love helping you look your best. What can we help you with today?",
+    "default_farewell": "Thanks for choosing us! See you soon! ✨"
+  }
+}

@@ -1,0 +1,25 @@
+# See https://vercel.com/docs/deployments/troubled-deploy
+
+#
+# /examples/frameworks/nextjs
+#
+
+# Ignore artifacts built by create-next-app
+coverage/
+next-env.d.ts
+
+```
+node_modules
+```
+
+```
+.smart-link-app/node_modules
+```
+
+```
+.next
+```
+
+```
+.smart-link-app/.next
+```

@@ -1,0 +1,44 @@
+{
+  "businesses": [
+    {
+      "slug": "cuts-barbershop",
+      "name": "Cut's Barbershop",
+      "lat": 40.6782,
+      "lng": -73.9442,
+      "geo": {"@type": "GeoCoordinates", "latitude": 40.6782, "longitude": -73.9442},
+      "facebook_url": "https://facebook.com/cutsbarbershop",
+      "instagram_url": "https://instagram.com/cutsbarbershop",
+      "twitter_url": ""
+    },
+    {
+      "slug": "luxe-salon",
+      "name": "Luxe Salon & Spa",
+      "lat": 40.7589,
+      "lng": -73.9851,
+      "geo": {"@type": "GeoCoordinates", "latitude": 40.7589, "longitude": -73.9851},
+      "facebook_url": "https://facebook.com/luxesalon",
+      "instagram_url": "https://instagram.com/luxesalon",
+      "twitter_url": "https://twitter.com/luxesalon"
+    },
+    {
+      "slug": "fresh-cuts-studio",
+      "name": "Fresh Cuts Studio",
+      "lat": 40.7282,
+      "lng": -73.7949,
+      "geo": {"@type": "GeoCoordinates", "latitude": 40.7282, "longitude": -73.7949},
+      "facebook_url": "",
+      "instagram_url": "https://instagram.com/freshcutsstudio",
+      "twitter_url": ""
+    },
+    {
+      "slug": "glow-hair-studio",
+      "name": "Glow Hair Studio",
+      "lat": 40.7580,
+      "lng": -73.9855,
+      "geo": {"@type": "GeoCoordinates", "latitude": 40.7580, "longitude": -73.9855},
+      "facebook_url": "https://facebook.com/glowhairstudio",
+      "instagram_url": "https://instagram.com/glowhairstudio",
+      "twitter_url": ""
+    }
+  ]
+}

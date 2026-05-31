@@ -1,0 +1,161 @@
+{
+  "seeded": true,
+  "businesses": [
+    {
+      "slug": "cuts-barbershop",
+      "name": "Cut's Barbershop",
+      "description": "Premium cuts, fades & beard trims. Walk-ins welcome. Family-owned since 2015.",
+      "phone": "+155****4567",
+      "email": "hello@cutsbarbershop.com",
+      "website": "https://cutsbarbershop.com",
+      "address": "123 Main Street",
+      "city": "Brooklyn",
+      "state": "NY",
+      "zip": "11201",
+      "category": "barbershop",
+      "hours": {
+        "mon": { "open": "09:00", "close": "19:00" },
+        "tue": { "open": "09:00", "close": "19:00" },
+        "wed": { "open": "09:00", "close": "19:00" },
+        "thu": { "open": "09:00", "close": "20:00" },
+        "fri": { "open": "09:00", "close": "20:00" },
+        "sat": { "open": "08:00", "close": "18:00" },
+        "sun": { "open": "10:00", "close": "16:00" }
+      },
+      "logo_url": "/logos/cuts-barbershop.png",
+      "is_active": true
+    },
+    {
+      "slug": "luxe-salon",
+      "name": "Luxe Salon & Spa",
+      "description": "Full-service salon: hair coloring, styling, blowouts, and spa treatments.",
+      "phone": "+155****6543",
+      "email": "book@luxesalon.com",
+      "website": "https://luxesalon.com",
+      "address": "456 Oak Avenue",
+      "city": "Manhattan",
+      "state": "NY",
+      "zip": "10001",
+      "category": "salon",
+      "hours": {
+        "mon": { "open": "10:00", "close": "20:00" },
+        "tue": { "open": "10:00", "close": "20:00" },
+        "wed": { "open": "10:00", "close": "20:00" },
+        "thu": { "open": "10:00", "close": "21:00" },
+        "fri": { "open": "10:00", "close": "21:00" },
+        "sat": { "open": "09:00", "close": "19:00" },
+        "sun": { "open": "11:00", "close": "17:00" }
+      },
+      "logo_url": "/logos/luxe-salon.png",
+      "is_active": true
+    },
+    {
+      "slug": "fresh-cuts-studio",
+      "name": "Fresh Cuts Studio",
+      "description": "Modern barbershop specializing in fades, line-ups, and creative designs. Open late for your convenience.",
+      "phone": "+155****7890",
+      "email": "book@freshcutsstudio.com",
+      "website": "https://freshcutsstudio.com",
+      "address": "789 Elm Boulevard",
+      "city": "Queens",
+      "state": "NY",
+      "zip": "11101",
+      "category": "barbershop",
+      "hours": {
+        "mon": { "open": "10:00", "close": "21:00" },
+        "tue": { "open": "10:00", "close": "21:00" },
+        "wed": { "open": "10:00", "close": "21:00" },
+        "thu": { "open": "10:00", "close": "22:00" },
+        "fri": { "open": "10:00", "close": "22:00" },
+        "sat": { "open": "09:00", "close": "20:00" },
+        "sun": { "open": "11:00", "close": "18:00" }
+      },
+      "logo_url": "/logos/fresh-cuts-studio.png",
+      "is_active": true
+    },
+    {
+      "slug": "glow-hair-studio",
+      "name": "Glow Hair Studio",
+      "description": "Trendy salon specializing in color, extensions, and bridal packages. Award-winning stylists.",
+      "phone": "+155****3210",
+      "email": "hello@glowhairstudio.com",
+      "website": "https://glowhairstudio.com",
+      "address": "321 Park Avenue",
+      "city": "Manhattan",
+      "state": "NY",
+      "zip": "10022",
+      "category": "salon",
+      "hours": {
+        "mon": { "open": "09:00", "close": "19:00" },
+        "tue": { "open": "09:00", "close": "19:00" },
+        "wed": { "open": "09:00", "close": "20:00" },
+        "thu": { "open": "09:00", "close": "20:00" },
+        "fri": { "open": "09:00", "close": "21:00" },
+        "sat": { "open": "08:00", "close": "19:00" },
+        "sun": { "open": "10:00", "close": "16:00" }
+      },
+      "logo_url": "/logos/glow-hair-studio.png",
+      "is_active": true
+    }
+  ],
+  "services": {
+    "cuts-barbershop": [
+      { "name": "Haircut", "description": "Classic cut with styling", "price": 3000, "duration_minutes": 30 },
+      { "name": "Fade + Beard", "description": "Skin fade with beard trim and shape-up", "price": 4500, "duration_minutes": 45 },
+      { "name": "Beard Trim", "description": "Beard shaping, trimming, and conditioning", "price": 2000, "duration_minutes": 20 },
+      { "name": "Hot Towel Shave", "description": "Traditional straight razor shave with hot towel", "price": 3500, "duration_minutes": 30 },
+      { "name": "Kids Cut", "description": "Haircut for children under 12", "price": 2200, "duration_minutes": 25 },
+      { "name": "Hair Design", "description": "Custom hair art/design", "price": 4000, "duration_minutes": 45 }
+    ],
+    "luxe-salon": [
+      { "name": "Women's Cut & Style", "description": "Wash, cut, and blowout", "price": 8500, "duration_minutes": 60 },
+      { "name": "Balayage", "description": "Hand-painted highlights for natural look", "price": 25000, "duration_minutes": 180 },
+      { "name": "Blowout", "description": "Wash and professional blowout", "price": 5500, "duration_minutes": 45 },
+      { "name": "Deep Conditioning", "description": "Intensive hair treatment", "price": 6000, "duration_minutes": 30 },
+      { "name": "Manicure", "description": "Classic manicure with polish", "price": 3500, "duration_minutes": 30 },
+      { "name": "Keratin Treatment", "description": "Smoothing treatment for frizz-free hair", "price": 35000, "duration_minutes": 240 }
+    ],
+    "fresh-cuts-studio": [
+      { "name": "Skin Fade", "description": "Zero-to-high skin fade with precise line-up", "price": 3500, "duration_minutes": 45 },
+      { "name": "Buzz Cut", "description": "All-over clipper cut with clean edges", "price": 2000, "duration_minutes": 20 },
+      { "name": "Line-Up + Beard", "description": "Crisp hairline design with beard shaping", "price": 4000, "duration_minutes": 40 },
+      { "name": "Hair Design", "description": "Custom patterns, logos, or artwork", "price": 5000, "duration_minutes": 60 },
+      { "name": "Hot Towel Shave", "description": "Traditional straight razor with hot towel", "price": 3500, "duration_minutes": 30 },
+      { "name": "Dye Job", "description": "Hair coloring or highlights", "price": 6000, "duration_minutes": 90 }
+    ],
+    "glow-hair-studio": [
+      { "name": "Full Color", "description": "Single-process all-over color", "price": 12000, "duration_minutes": 120 },
+      { "name": "Highlights", "description": "Full head foils for dimensional color", "price": 18000, "duration_minutes": 180 },
+      { "name": "Balayage", "description": "Hand-painted ombré effect", "price": 22000, "duration_minutes": 210 },
+      { "name": "Keratin Treatment", "description": "Smoothing treatment for frizz-free hair", "price": 28000, "duration_minutes": 240 },
+      { "name": "Extensions (Install)", "description": "Premium hair extension application", "price": 45000, "duration_minutes": 300 },
+      { "name": "Bridal Package", "description": "Hair, makeup, and trial session", "price": 65000, "duration_minutes": 360 }
+    ]
+  },
+  "reviews": {
+    "cuts-barbershop": [
+      { "customer_name": "Marcus J.", "rating": 5, "comment": "Best fade I've ever gotten. The attention to detail is insane. Always leave looking sharp.", "created_at": "2026-05-15" },
+      { "customer_name": "David R.", "rating": 5, "comment": "Great vibes, great cuts. The hot towel shave is a must-try. Been coming here for 2 years.", "created_at": "2026-05-02" },
+      { "customer_name": "Tyler W.", "rating": 4, "comment": "Solid barbershop. Wait can be long on Saturdays but totally worth it.", "created_at": "2026-04-18" },
+      { "customer_name": "James L.", "rating": 5, "comment": "Walked in without an appointment and they still took me in. Quality cut and friendly staff.", "created_at": "2026-04-05" },
+      { "customer_name": "Andre M.", "rating": 5, "comment": "My son's first haircut here — they were so patient and gentle. Now he asks to go every month!", "created_at": "2026-03-22" }
+    ],
+    "luxe-salon": [
+      { "customer_name": "Sarah K.", "rating": 5, "comment": "The balayage turned out exactly like the Pinterest photo. Best color work in the city.", "created_at": "2026-05-20" },
+      { "customer_name": "Priya N.", "rating": 5, "comment": "Luxe is my go-to for special events. The blowout team is incredible.", "created_at": "2026-05-10" },
+      { "customer_name": "Emma T.", "rating": 4, "comment": "Beautiful salon, talented stylists. A bit pricey but the quality justifies it.", "created_at": "2026-04-28" },
+      { "customer_name": "Rachel G.", "rating": 5, "comment": "Deep conditioning treatment saved my damaged hair. Will be back every month.", "created_at": "2026-04-15" },
+      { "customer_name": "Lisa H.", "rating": 5, "comment": "Finally found a salon that understands what I want. The staff actually listens!", "created_at": "2026-03-30" }
+    ],
+    "fresh-cuts-studio": [
+      { "customer_name": "Kevin D.", "rating": 5, "comment": "The line-up is always crisp. These guys are artists. Open late which is perfect for my schedule.", "created_at": "2026-05-25" },
+      { "customer_name": "Jamal B.", "rating": 4, "comment": "Great fades and the hair designs are wild. Only wish they had more weekend hours.", "created_at": "2026-05-12" },
+      { "customer_name": "Chris P.", "rating": 5, "comment": "Drove 30 minutes for this spot and it was worth every mile. The Hot Towel Shave is elite.", "created_at": "2026-04-30" }
+    ],
+    "glow-hair-studio": [
+      { "customer_name": "Amanda R.", "rating": 5, "comment": "Got my balayage here and it's absolutely stunning. The stylists really know color theory.", "created_at": "2026-05-22" },
+      { "customer_name": "Nicole W.", "rating": 5, "comment": "My bridal hair was flawless. The trial session gave me total confidence for the big day.", "created_at": "2026-05-08" },
+      { "customer_name": "Diana L.", "rating": 4, "comment": "Amazing extensions — completely natural look. Worth the investment for sure.", "created_at": "2026-04-15" }
+    ]
+  }
+}

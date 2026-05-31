@@ -6,4 +6,6 @@ export default defineConfig({
   dialect: "postgresql",
   strict: true,
   verbose: true,
+  // Set via DRIZZLE_DATABASE_URL env var in production
+  // database: process.env.DRIZZLE_DATABASE_URL || "postgresql://...",
 });

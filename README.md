@@ -1,76 +1,25 @@
 # Smart Link
 
-A smart business link platform for local companies — booking, CRM, and AI-indexable profiles.
+Smart business link platform for local companies — booking, CRM, and AI-indexable profiles.
 
-## Tech Stack
+## Repo layout
 
-- **Frontend:** Next.js 15 (App Router) + Tailwind CSS + shadcn/ui
-- **Backend:** Next.js Server Actions
-- **Database:** Supabase (PostgreSQL) + Drizzle ORM
-- **Hosting:** Vercel
-- **Email:** Resend | **SMS:** Twilio | **Monitoring:** Sentry
+- `smart-link-app/` — Next.js application
+- `docs/` — operator-facing product and rollout docs
+- `templates/` — copy/templates for distribution surfaces
+- `plan.md` — project roadmap and operating rules
+- `logs/` — autonomous execution notes and reconciler logs
 
-## Getting Started
+## App quick start
 
 ```bash
-# Install dependencies
 cd smart-link-app
 npm install
-
-# Set up environment variables
-cp .env.example .env.local
-# Edit .env.local with your Supabase credentials
-
-# Run development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
-
-## Project Structure
-
-```
-smart-link-app/
-├── src/
-│   ├── app/
-│   │   ├── business/[slug]/    # Dynamic business profile pages
-│   │   ├── layout.tsx           # Root layout with metadata
-│   │   ├── page.tsx             # Landing page
-│   │   └── globals.css          # Global styles
-│   └── lib/
-│       ├── db.ts                # Drizzle database client
-│       └── supabase.ts          # Supabase client
-├── drizzle/
-│   ├── schema.ts                # Database schema definitions
-│   └── migrations/              # Generated migrations
-├── public/                      # Static assets
-├── .env.example                 # Environment variables template
-├── drizzle.config.ts            # Drizzle configuration
-└── package.json
-```
-
-## Database Schema
-
-- **businesses** — Business profiles (slug, name, services, hours, etc.)
-- **users** — Auth users linked to businesses
-- **services** — Individual services with pricing
-- **bookings** — Appointment records
-- **reviews** — Customer reviews
-
-## Environment Variables
-
-Copy `.env.example` to `.env.local` and fill in:
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
+Open http://localhost:3000
 
 ## Deployment
 
-1. Push to `main` branch
-2. Connect repo to Vercel
-3. Add environment variables in Vercel dashboard
-4. Deploy!
-
-## License
-
-MIT
+Vercel is configured from the repo root via `.vercel.json`, with the Next.js app living in `smart-link-app/`.

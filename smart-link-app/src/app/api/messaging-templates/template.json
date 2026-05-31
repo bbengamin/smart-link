@@ -1,0 +1,22 @@
+{
+  "InstagramBio": {
+    "description": "Smart Link Instagram bio with smart link",
+    "template": "{{ business_name }} - Book appointments, get directions, and view services in one tap! 👉 {{smart_link_url}}",
+    "example": "The Coffee Roasters - Book appointments, get directions, and view services in one tap! 👉 https://smartlink.app/business/the-coffee-roasters"
+  },
+  "WhatsappGreeting": {
+    "description": "WhatsApp/SMS business greeting with smart link",
+    "template": "Hi! Thanks for choosing {{business_name}}. Check out our services and book directly: {{smart_link_url}}",
+    "example": "Hi! Thanks for choosing Barbosa Barbers. Check out our services and book directly: https://smartlink.app/business/barbosa-barbers"
+  },
+  "GoogleMapsSnippet": {
+    "description": "Google Maps business card snippet",
+    "template": "📍 {{business_name}}\n⭐ Visit us at: {{address}}\n📞 Call: {{phone}}\n💻 Book: {{smart_link_url}}",
+    "example": "📍 The Coffee Roasters\n⭐ Visit us at: 123 Main St, New York, NY\n📞 Call: +1-555-1234\n💻 Book: https://smartlink.app/business/the-coffee-roasters"
+  },
+  "EmailSignature": {
+    "description": "Email signature with smart link",
+    "template": "{{business_name}} | Visit our smart link: {{smart_link_url}}",
+    "example": "The Coffee Roasters | Visit our smart link: https://smartlink.app/business/the-coffee-roasters"
+  }
+}

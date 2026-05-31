@@ -1,0 +1,85 @@
+{
+  "decision_date": "2026-05-28",
+  "chosen_stack": {
+    "frontend": {
+      "framework": "Next.js 15 (App Router)",
+      "reasoning": "SSR for SEO-critical profile pages, App Router for modern React patterns, built-in image optimization. Vercel edge functions can serve profiles at CDN edge.",
+      "styling": "Tailwind CSS + shadcn/ui",
+      "reasoning_styling": "Utility-first for rapid iteration. shadcn/ui gives accessible, copy-paste components that don't drift from upstream."
+    },
+    "backend": {
+      "framework": "Next.js API Routes / Server Actions",
+      "reasoning": "Keep monorepo simple. No separate backend needed for MVP. Server Actions handle form submissions securely."
+    },
+    "database": {
+      "provider": "Supabase (PostgreSQL)",
+      "reasoning": "Built-in auth, real-time, row-level security. Free tier covers early stage. PostGIS for location-based search later.",
+      "migration_tool": "Drizzle ORM + Drizzle Kit",
+      "reasoning_drizzle": "Lighter than Prisma, better performance, TypeScript-first, SQL-like API that developers know."
+    },
+    "auth": {
+      "provider": "Supabase Auth",
+      "reasoning": "Email/OAuth magic links, phone auth, social providers. RLS handles authorization automatically. Zero infra to manage."
+    },
+    "hosting": {
+      "platform": "Vercel (Hobby \u2192 Pro)",
+      "reasoning": "Zero-config Next.js deployment. Edge network for profile pages. Free tier generous. Auto HTTPS, CDN, previews on PRs.",
+      "fallback": "Cloudflare Pages (if Vercel pricing becomes issue)"
+    },
+    "email": {
+      "provider": "Resend",
+      "reasoning": "Developer-first email API. React-based email templates. Free tier 3k emails/month. Better DX than SendGrid for this use case."
+    },
+    "sms": {
+      "provider": "Twilio",
+      "reasoning": "Industry standard, reliable, pay-as-you-go. Only needed for booking confirmations."
+    },
+    "storage": {
+      "provider": "Supabase Storage",
+      "reasoning": "Built into Supabase ecosystem. Good for business logos, photos. RLS integrates with auth."
+    },
+    "monitoring": {
+      "error_tracking": "Sentry",
+      "reasoning": "Free tier generous, integrates with Vercel, great error grouping."
+    }
+  },
+  "alternatives_evaluated": {
+    "prisma": "Rejected: heavier runtime, slower cold starts on serverless, larger bundle.",
+    "nhost": "Rejected: smaller community than Supabase, less proven at scale.",
+    "Firebase": "Rejected: vendor lock-in, weaker SQL experience, NoSQL limits complex queries.",
+    "Strapi": "Rejected: self-hosted = more ops overhead, contradicts 'low maintenance' goal.",
+    "Astro": "Evaluated but rejected: better for content sites, worse for booking/CRM interactivity."
+  },
+  "mvp_scope": {
+    "niche": "Barbershops & local salons",
+    "reasoning": "High volume, recurring appointments, visual-first, price-sensitive (need simple tool). Clear ICP for early feedback.",
+    "features_v1": [
+      "Public profile page with business info, hours, services, photos",
+      "AI-indexable structured data (JSON-LD + semantic HTML)",
+      "Booking form (date/time picker, service selection)",
+      "SMS/email confirmation to customer",
+      "Admin dashboard for business owner",
+      "Contact buttons (call, WhatsApp, email, directions)"
+    ],
+    "features_v2": [
+      "Client CRM with history and notes",
+      "Telegram bot for booking alerts",
+      "Custom domain support",
+      "Branded theme customization",
+      "Reviews/ratings"
+    ]
+  },
+  "architecture_notes": {
+    "profile_page": "SSR via Next.js App Router. Each business gets /business/{slug}. JSON-LD injected for AI indexing. Schema.org LocalBusiness + BarberShop types.",
+    "database_schema": "Tables: businesses, users, services, bookings, reviews. RLS policies per business. PostGIS for 'near me' queries.",
+    "seo_strategy": "Full SSR for profile pages. Dynamic sitemaps. Open Graph tags per business. JSON-LD for AI agent consumption.",
+    "cost_estimate_monthly": {
+      "vercel_hobby": "$0 (free tier), Pro $20/user later",
+      "supabase_free": "$0 (free tier: 500MB, 50k MAU)",
+      "resend_free": "$0 (3k emails/month)",
+      "twilio": "~$1-2 (pay per SMS used)",
+      "sentry_free": "$0 (5k errors/month)",
+      "total_estimated": "$0-3/month for first 100 businesses"
+    }
+  }
+}
