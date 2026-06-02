@@ -42,8 +42,8 @@ utm_campaign: nyc_pilot_wave1_2026-05-30
 utm_content: gerritsen_dm_v1
 current_state: approval_requested
 last_action_timestamp: 2026-06-01T10:03:16Z
-next_action: Awaiting human approval for first Instagram DM touch; workers may prepare/send only after explicit approval in linked board card. Do not auto-fire.
-linked_board_card: t_f8d691ba
+next_action: Awaiting human approval for first Instagram DM touch; workers may prepare/send only after explicit approval in the approval summary. Do not auto-fire.
+linked_board_card: docs-only (pending human review)
 ```
 
 **Context:**  
@@ -65,7 +65,7 @@ utm_content: kings_sms_v1
 current_state: approval_requested
 last_action_timestamp: 2026-06-01T20:44:33Z
 next_action: Awaiting human approval to send the first-touch SMS below; if approved and no reply, place one non-peak phone follow-up after 48h.
-linked_board_card: t_46d74279
+linked_board_card: docs-only (pending human review)
 ```
 
 **Context:**  
@@ -96,8 +96,8 @@ utm_campaign: nyc_pilot_wave1_2026-05-30
 utm_content: percys_sms_v1
 current_state: approval_requested
 last_action_timestamp: 2026-06-01T21:40:00Z
-next_action: Awaiting human approval for first SMS touch; workers may prepare/send only after explicit approval in linked board card. Do not auto-fire.
-linked_board_card: t_15462536
+next_action: Awaiting human approval for first SMS touch; workers may prepare/send only after explicit approval in the approval summary. Do not auto-fire.
+linked_board_card: docs-only (pending human review)
 ```
 
 **Context:**  
@@ -185,7 +185,7 @@ Beauty salon in Harlem, Manhattan with phone-only contact and minimal online foo
 
 - **No auto-fire:** Workers may prepare messages and verify channels, but sending requires explicit approval state (`current_state: approved`) from a human or documented auto-approval rule.
 - **Approval process:** See `docs/outreach-workflow-approved.md` for channel capability matrix, state machine, and where approval is required vs optional.
-- **Board linkage:** All outreach entries are anchored to their Kanban board card (e.g., `t_f8d691ba`) so workers/humans can inspect the full thread, drafts, and decisions in one place.
+- **Board linkage:** All outreach entries are documented here and summarized in `docs/first-wave-approval-summary.md` so workers/humans can inspect the full details, drafts, and decisions without requiring live board cards (which may be created docs-only pending human approval).
 
 ---
 

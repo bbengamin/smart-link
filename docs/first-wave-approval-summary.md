@@ -26,48 +26,48 @@ Five prospects in first-wave pilot (NYC) are currently awaiting human approval b
 ## Prospect Details
 
 ### 1. Gerritsen Barber Shop & Hair Salon
-- **Channel:** Instagram DM (fallback: email)
-- **State:** `approval_requested` (linked to board card `t_f8d691ba`)
-- **Context:** OpenStreetMap Nominatim lookup; has Instagram presence, no booking link. Ideal for "one link in bio" pitch.
-- **Action:** Approve/reject first Instagram DM touch pending human review.
+|- **Channel:** Instagram DM (fallback: email)
+|- **State:** `approval_requested` (docs-only; pending human review)
+|- **Context:** OpenStreetMap Nominatim lookup; has Instagram presence, no booking link. Ideal for "one link in bio" pitch.
+|- **Action:** Approve/reject first Instagram DM touch pending human review.
 
 ---
 
 ### 2. Kings Barber Shop
-- **Channel:** SMS (fallback: phone)
-- **State:** `approval_requested` (linked to board card `t_46d74279`)
-- **Context:** Bensonhurst, Brooklyn; no website/social handle — Nearspoke replaces phone-tag. Pitch: "less phone-tag, more direct bookings."
-- **Draft SMS:** "Hi — I'm running a free 30-day Nearspoke pilot for neighborhood barbershops. We set up one mobile-friendly link for your services, hours, and booking/contact flow so customers spend less time on phone-tag. Want a short preview?"
-- **Action:** Approve/reject SMS first touch; confirm phone follow-up after 48h of silence is acceptable.
+|- **Channel:** SMS (fallback: phone)
+|- **State:** `approval_requested` (docs-only; pending human review)
+|- **Context:** Bensonhurst, Brooklyn; no website/social handle — Nearspoke replaces phone-tag. Pitch: "less phone-tag, more direct bookings."
+|- **Draft SMS:** "Hi — I'm running a free 30-day Nearspoke pilot for neighborhood barbershops. We set up one mobile-friendly link for your services, hours, and booking/contact flow so customers spend less time on phone-tag. Want a short preview?"
+|- **Action:** Approve/reject SMS first touch; confirm phone follow-up after 48h of silence is acceptable.
 
 ---
 
 ### 3. Percy's Unisex Barber Shop
-- **Channel:** SMS (no fallback)
-- **State:** `approval_requested` (linked to board card `t_15462536`)
-- **Context:** Unionport, Bronx; has phone (+1-718-822-9313), no booking funnel. Single link + reminders likely to perform well.
-- **Draft SMS:** "Hi — I'm running a free 30-day Nearspoke pilot for barbershops/salons. We set up one mobile-friendly link with services, prices, hours, and booking/contact flow so clients stop bouncing between DMs, texts, and phone-tag. Want a short preview?"
-- **Action:** Approve/reject SMS to Percy's Unisex Barber Shop (+1-718-822-9313); verify demo link before sending.
+|- **Channel:** SMS (no fallback)
+|- **State:** `approval_requested` (docs-only; pending human review)
+|- **Context:** Unionport, Bronx; has phone (+1-718-822-9313), no booking funnel. Single link + reminders likely to perform well.
+|- **Draft SMS:** "Hi — I'm running a free 30-day Nearspoke pilot for barbershops/salons. We set up one mobile-friendly link with services, prices, hours, and booking/contact flow so clients stop bouncing between DMs, texts, and phone-tag. Want a short preview?"
+|- **Action:** Approve/reject SMS to Percy's Unisex Barber Shop (+1-718-822-9313); verify demo link before sending.
 
 ---
 
 ### 4. Naespa Nails & Hair Salon
-- **Channel:** SMS (no fallback)
-- **State:** `approval_requested` (linked to board card `t_62ecb132`)
-- **Context:** Astoria, Queens; has phone (+1-347-894-6190), no booking link. Service menu + appointment reminders benefit from one easy mobile link.
-- **Draft SMS:** "Hi — I'm running a free 30-day Nearspoke pilot for barbershops/salons. We set up one mobile-friendly link with your services, pricing, hours, and booking/contact flow so clients stop bouncing between DMs, texts, and phone-tag. Want a short preview?"
-- **Demo URL:** https://smart-link-app-swart.vercel.app/ (verified public demo)
-- **Action:** Approve/reject SMS to Naespa Nails & Hair Salon (+1-347-894-6190); confirm demo link inclusion.
+|- **Channel:** SMS (no fallback)
+|- **State:** `approval_requested` (docs-only; pending human review)
+|- **Context:** Astoria, Queens; has phone (+1-347-894-6190), no booking link. Service menu + appointment reminders benefit from one easy mobile link.
+|- **Draft SMS:** "Hi — I'm running a free 30-day Nearspoke pilot for barbershops/salons. We set up one mobile-friendly link with your services, pricing, hours, and booking/contact flow so clients stop bouncing between DMs, texts, and phone-tag. Want a short preview?"
+|- **Demo URL:** https://smart-link-app-swart.vercel.app/ (verified public demo)
+|- **Action:** Approve/reject SMS to Naespa Nails & Hair Salon (+1-347-894-6190); confirm demo link inclusion.
 
 ---
 
 ### 5. Radiant Reflections Beauty Salon
-- **Channel:** SMS (fallback: phone)
-- **State:** `approval_requested` (linked to board card `t_6cfa9adc`)
-- **Context:** Harlem, Manhattan; phone-only contact (+1-347-899-7266), minimal online footprint. Strong fit for "private pilot" offer.
-- **Draft SMS:** "Hi — I'm running a free 30-day Nearspoke pilot for barbershops/salons. We handle setup for you and give you one mobile-friendly link for services, hours, and booking/contact flow. You just approve the details. Want a short preview?"
-- **Demo URL:** https://smart-link-app-swart.vercel.app/ (verified public demo)
-- **Action:** Approve/reject SMS to Radiant Reflections Beauty Salon (+1-347-899-7266); confirm demo link inclusion and phone follow-up after 48h.
+|- **Channel:** SMS (fallback: phone)
+|- **State:** `approval_requested` (docs-only; pending human review)
+|- **Context:** Harlem, Manhattan; phone-only contact (+1-347-899-7266), minimal online footprint. Strong fit for "private pilot" offer.
+|- **Draft SMS:** "Hi — I'm running a free 30-day Nearspoke pilot for barbershops/salons. We handle setup for you and give you one mobile-friendly link for services, hours, and booking/contact flow. You just approve the details. Want a short preview?"
+|- **Demo URL:** https://smart-link-app-swart.vercel.app/ (verified public demo)
+|- **Action:** Approve/reject SMS to Radiant Reflections Beauty Salon (+1-347-899-7266); confirm demo link inclusion and phone follow-up after 48h.
 
 ---
 

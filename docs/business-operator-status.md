@@ -50,7 +50,7 @@ Smallest human action: Approve or reject the prepared first-touch templates for 
 
 ### B. Nearspoke domain ownership is still a human-only gate
 
-Board card: `t_12828938`
+Track: docs-only (pending registrar action)
 
 Current truth:
 - Rebrand direction effectively GO
@@ -58,11 +58,11 @@ Current truth:
 
 Smallest human action:
 - Re-check domain availability
-- Buy if desired and record result on the card
+- Buy if desired
 
 ### C. Demo URL / outreach verification is live
 
-Board card: `t_8a872aa3`
+Track: docs-only (verified public demo at smart-link-app-swart.vercel.app/)
 
 Current truth:
 - Local build/typecheck passed
