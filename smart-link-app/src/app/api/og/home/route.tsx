@@ -20,7 +20,7 @@ export async function GET() {
         }}
       >
         <div style={{ fontSize: 28, fontWeight: 700, opacity: 0.9, marginBottom: 18 }}>
-          Smart Link
+          Nearspoke
         </div>
         <div style={{ fontSize: 64, fontWeight: 800, lineHeight: 1.1, maxWidth: 860, marginBottom: 24 }}>
           AI-ready business profiles for salons, barbershops, and local service brands

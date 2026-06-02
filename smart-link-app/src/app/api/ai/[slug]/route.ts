@@ -250,16 +250,16 @@ export async function GET(
       ].filter(Boolean),
       openingHoursSpecification: Object.entries(business.hours || {}).map((entry) => {
         const [day, hours] = entry as [string, any];
-        // Map short keys (mon/tue/wed/sat/sun) to proper schema.org weekday names
         const dayMap: Record<string, string> = {
           mon: "Monday", tue: "Tuesday", wed: "Wednesday", thu: "Thursday", fri: "Friday",
           sat: "Saturday", sun: "Sunday",
         };
+        const normalizedDay = dayMap[day.toLowerCase()] || ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].find(
+          (d) => d.toLowerCase().replace(/day$/, "") === day.replace(/day$/g, "").toLowerCase()
+        ) || "Monday";
         return {
           "@type": "OpeningHoursSpecification",
-          dayOfWeek: dayMap[day.toLowerCase()] || (["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].find(
-            (d) => d.toLowerCase().replace(/day$/, "") === day.replace(/day$/g, "").toLowerCase()
-          ) || "Monday",
+          dayOfWeek: normalizedDay,
           opens: hours.open,
           closes: hours.close,
         };

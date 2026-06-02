@@ -1,11 +1,11 @@
-# Smart Link — MVP Demo Handoff for Pilot Owners
+# Nearspoke — MVP Demo Handoff for Pilot Owners
 
 Date: 2026-05-31
 Audience: barbershop/salon owner, manager, or pilot tester
-Purpose: show the current Smart Link MVP honestly, without pretending deployment or ops are farther along than they are.
+Purpose: show the current Nearspoke MVP honestly, without pretending deployment or ops are farther along than they are.
 
 ## What this demo is
-Smart Link currently proves the core idea in demo mode:
+Nearspoke currently proves the core idea in demo mode:
 - a public business profile page
 - contact buttons
 - a booking flow
@@ -14,7 +14,7 @@ Smart Link currently proves the core idea in demo mode:
 - AI-readable business data
 
 It is good enough to walk an owner through the concept and collect pilot feedback.
-It is not yet a verified public production launch.
+It is a verified public demo on Vercel today, but it is not honest to present it as a fully proven production rollout.
 
 ## Start here
 If you have the app running locally, open the home page first:
@@ -35,7 +35,7 @@ Route:
 - `/`
 
 What it proves:
-- Smart Link can present multiple demo businesses from one landing page.
+- Nearspoke can present multiple demo businesses from one landing page.
 - The product pitch is already framed around booking, business info, and AI discoverability.
 
 What to look for:
@@ -108,7 +108,7 @@ Route:
 - `/admin/dashboard`
 
 What it proves:
-- Smart Link has an owner-facing view for bookings, revenue, and service activity
+- Nearspoke has an owner-facing view for bookings, revenue, and service activity
 - there is already a skeleton for the “where do new leads/bookings show up?” question
 
 Important truth right now:
@@ -123,7 +123,7 @@ Route:
 - `/admin/clients`
 
 What it proves:
-- Smart Link can show a lightweight client list with booking/value context
+- Nearspoke can show a lightweight client list with booking/value context
 - there is already a simple retention/CRM direction, without pretending it is a giant platform
 
 Important truth right now:
@@ -140,7 +140,7 @@ You can swap the slug for the other demo businesses too.
 
 What it proves:
 - the business profile can be exposed as structured JSON for crawlers, assistants, or future agents
-- Smart Link is not just pretty HTML; it is trying to make local business data machine-readable
+- Nearspoke is not just pretty HTML; it is trying to make local business data machine-readable
 
 What to look for:
 - business identity
@@ -164,9 +164,9 @@ Important truth right now:
 ## What is still blocked or not production-ready
 These are the sharp edges. Better to say them now than bullshit people later.
 
-### Not verified as live public production
-Current project docs explicitly say there is no verified public production Smart Link URL yet.
-Do not present this MVP as already live on a trusted public domain.
+### Verified public demo, not verified custom-domain production
+The public Vercel demo URL `https://smart-link-mu.vercel.app/` is verified live.
+Do not present that as the same thing as a separately verified `smartlink.app` custom-domain launch.
 
 ### Bookings are demo-mode, not real live ops
 The booking demo stores data locally in the browser.
@@ -178,6 +178,8 @@ That means:
 ### Dashboard and client list are concept-valid, not ops-valid
 `/admin/dashboard` and `/admin/clients` show the owner experience direction, but the numbers are mock/demo data.
 
+Do not pitch those routes as fixed live owner portals. Right now they are useful demo/operator views, not proven business back-office surfaces.
+
 ### Telegram alerts should be described carefully
 Owner expectation from the setup checklist:
 - alerts are optional, not magic
@@ -185,12 +187,19 @@ Owner expectation from the setup checklist:
 - if alerts are not configured yet, the owner should still check the dashboard/list during pilot week
 
 So the honest line is:
-- Smart Link expects owner alerts to exist eventually
+- Nearspoke expects owner alerts to exist eventually
 - real alert delivery for a live pilot is not yet confirmed in this MVP handoff
 
 ### QR/distribution surfaces are uneven
 There is QR/distribution work in the app, but some of it still points at old example slugs/content instead of the seeded barber/salon demo set.
 That means these surfaces are useful for the concept, but not yet clean enough to sell as the finished pilot path.
+
+## Known live demo limits before first outreach
+- Verified public demo URL: `https://smart-link-mu.vercel.app/`
+- Custom-domain verification is separate; do not casually swap in `smartlink.app` like it is already proven.
+- Booking, dashboard, and client-list flows are still MVP/demo-mode and should be described that way.
+- Telegram/SMS/email alerts are optional setup territory, not a guaranteed live feature already confirmed for every pilot.
+- Nearspoke is not a CRM replacement in this handoff. If someone hears "CRM," the doc is doing a sloppy job.
 
 ## Exact human next actions for a pilot owner/tester
 
@@ -202,7 +211,7 @@ That means these surfaces are useful for the concept, but not yet clean enough t
 5. Open `/admin/dashboard` and `/admin/clients` and decide whether those views are enough for pilot week one.
 6. Give blunt feedback on what would block you from using this with real customers.
 
-### If you are a Smart Link tester/operator
+### If you are a Nearspoke tester/operator
 1. Use this demo to walk the owner through the happy path: profile -> booking -> bookings view -> dashboard -> client list.
 2. Do not oversell deployment, alerts, or live reporting.
 3. Capture objections and missing info with `docs/pilot-call-notes-template.md`.

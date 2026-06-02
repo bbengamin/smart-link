@@ -1,4 +1,4 @@
-# Smart Link — Minimal Pilot Setup Checklist
+# Nearspoke — Minimal Pilot Setup Checklist
 
 Date: 2026-05-30
 Scope: tiny, usable onboarding checklist for the first barbershop/salon pilot. No giant rollout theater.

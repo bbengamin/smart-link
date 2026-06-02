@@ -1,6 +1,6 @@
 # Social & Messaging Copy Templates (MVP)
 
-Lightweight, reusable copy templates for Smart Link business profiles. These templates are designed to be easy to customize and deploy across multiple channels without requiring CRM or paid tooling.
+Lightweight, reusable copy templates for Nearspoke business profiles. These templates are designed to be easy to customize and deploy across multiple channels without requiring CRM or paid tooling.
 
 ## 📁 Files
 

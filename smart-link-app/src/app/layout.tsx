@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
-  title: "Smart Link — Smart Business Links",
+  title: "Nearspoke — Smart Business Links",
   description:
     "Give your business a smart link that books customers, manages clients, and indexes itself to AI.",
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Smart Link",
+    siteName: "Nearspoke",
   },
 };
 

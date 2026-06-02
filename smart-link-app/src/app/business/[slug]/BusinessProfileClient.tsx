@@ -7,27 +7,36 @@ import { buildBusinessMapUrl } from "@/data/business-discovery";
 interface Props {
   slug: string;
   isDemo: boolean;
+  bookingHref: string;
   phone?: string | null;
   email?: string | null;
   address?: string | null;
   city?: string | null;
   state?: string | null;
   zip?: string | null;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
 }
 
 export default function BusinessProfileClient({
   slug,
   isDemo,
+  bookingHref,
   phone,
   email,
   address,
   city,
   state,
   zip,
+  utm_source,
+  utm_medium,
+  utm_campaign,
 }: Props) {
   useEffect(() => {
-    onPageView(slug, isDemo ? "demo" : "live");
-  }, [slug, isDemo]);
+    // Pass UTM params to analytics on page view
+    onPageView(slug, isDemo ? "demo" : "live", utm_source, utm_medium, utm_campaign);
+  }, [slug, isDemo, utm_source, utm_medium, utm_campaign]);
 
   const sanitizedPhone = phone?.replace(/[^0-9+]/g, "") || "";
   const whatsappPhone = phone?.replace(/[^0-9]/g, "") || "";
@@ -36,9 +45,10 @@ export default function BusinessProfileClient({
   return (
     <>
       <div className="mb-10">
+        {/* Book Appointment link - preserves server-resolved UTM params */}
         <a
-          href={`/business/${slug}/book`}
-          onClick={() => track("contact_click", { slug, method: "book" })}
+          href={bookingHref}
+          onClick={() => track("contact_click", { slug, method: "book", utm_source, utm_medium, utm_campaign })}
           className="block w-full bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white py-4 rounded-2xl text-lg font-semibold shadow-sm hover:shadow-md transition-all text-center"
         >
           Book Appointment
@@ -66,7 +76,7 @@ export default function BusinessProfileClient({
           {phone && (
             <a
               href={`tel:${sanitizedPhone}`}
-              onClick={() => onContactClick("call")}
+              onClick={() => onContactClick("call", { slug, utm_source, utm_medium, utm_campaign })}
               className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-xl text-sm font-medium text-gray-700 border border-gray-100 transition-colors"
             >
               📞 Call
@@ -77,7 +87,7 @@ export default function BusinessProfileClient({
               href={`https://wa.me/${whatsappPhone}?text=Hi,%20I%20saw%20your%20smart%20link%20and%20wanted%20to%20book!`}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => onContactClick("whatsapp")}
+              onClick={() => onContactClick("whatsapp", { slug, utm_source, utm_medium, utm_campaign })}
               className="flex items-center justify-center gap-2 px-4 py-3 bg-green-50 hover:bg-green-100 rounded-xl text-sm font-medium text-green-700 border border-green-200 transition-colors"
             >
               💬 WhatsApp
@@ -86,7 +96,7 @@ export default function BusinessProfileClient({
           {email && (
             <a
               href={`mailto:${email}?subject=Smart%20Link%20Booking%20Inquiry`}
-              onClick={() => onContactClick("email")}
+              onClick={() => onContactClick("email", { slug, utm_source, utm_medium, utm_campaign })}
               className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-xl text-sm font-medium text-gray-700 border border-gray-100 transition-colors"
             >
               ✉️ Email
@@ -97,7 +107,7 @@ export default function BusinessProfileClient({
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => onContactClick("directions")}
+              onClick={() => onContactClick("directions", { slug, utm_source, utm_medium, utm_campaign })}
               className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-xl text-sm font-medium text-gray-700 border border-gray-100 transition-colors"
             >
               📍 Directions
@@ -113,7 +123,7 @@ export default function BusinessProfileClient({
                 <dd>
                   <a
                     href={`tel:${sanitizedPhone}`}
-                    onClick={() => onContactClick("call")}
+                    onClick={() => onContactClick("call", { slug, utm_source, utm_medium, utm_campaign })}
                     className="text-blue-600 hover:underline"
                   >
                     {phone}
@@ -141,7 +151,7 @@ export default function BusinessProfileClient({
                 <dd>
                   <a
                     href={`mailto:${email}?subject=Smart%20Link%20Booking%20Inquiry`}
-                    onClick={() => onContactClick("email")}
+                    onClick={() => onContactClick("email", { slug, utm_source, utm_medium, utm_campaign })}
                     className="text-blue-600 hover:underline"
                   >
                     {email}

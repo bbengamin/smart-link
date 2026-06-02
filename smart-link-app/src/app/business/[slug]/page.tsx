@@ -13,9 +13,38 @@ import {
 import ReviewsSection from "@/components/ReviewsSection";
 import BusinessProfileClient from "./BusinessProfileClient";
 
-// Props
 interface Props {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<{
+    utm_source?: string;
+    utm_medium?: string;
+    utm_campaign?: string;
+    [key: string]: string | string[] | undefined;
+  }>;
+}
+
+function getSearchParam(value: string | string[] | undefined): string | undefined {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function buildQueryString(
+  searchParams?: Record<string, string | string[] | undefined>,
+): string {
+  if (!searchParams) return "";
+
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(searchParams)) {
+    if (Array.isArray(value)) {
+      value.forEach((entry) => {
+        if (entry) params.append(key, entry);
+      });
+    } else if (value) {
+      params.set(key, value);
+    }
+  }
+
+  const query = params.toString();
+  return query ? `?${query}` : "";
 }
 
 // JSON-LD for AI indexing
@@ -77,16 +106,16 @@ function BusinessJSONLD(business: any, slug: string) {
       ].filter(Boolean),
       openingHoursSpecification: Object.entries(business.hours || {}).map((entry: any) => {
         const [day, hours] = entry;
-        // Map short keys (mon/tue/wed/sat/sun) to proper schema.org weekday names
         const dayMap: Record<string, string> = {
           mon: "Monday", tue: "Tuesday", wed: "Wednesday", thu: "Thursday", fri: "Friday",
           sat: "Saturday", sun: "Sunday",
         };
+        const normalizedDay = dayMap[day.toLowerCase()] || ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].find(
+          (d) => d.toLowerCase().replace(/day$/, "") === day.replace(/day$/g, "").toLowerCase()
+        ) || "Monday";
         return {
           "@type": "OpeningHoursSpecification",
-          dayOfWeek: dayMap[day.toLowerCase()] || ([\"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"].find(
-            (d) => d.toLowerCase().replace(/day$/, "") === day.replace(/day$/g, "").toLowerCase()
-          )),
+          dayOfWeek: normalizedDay,
           opens: hours.open,
           closes: hours.close,
         };
@@ -147,18 +176,18 @@ export async function generateMetadata({
     ].join(" ");
 
     return {
-      title: `${demo.name} — ${demo.city} Business | Smart Link`,
+      title: `${demo.name} — ${demo.city} Business | Nearspoke`,
       description,
       keywords,
       alternates: {
         canonical: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}`,
       },
       openGraph: {
-        title: `${demo.name} | Smart Link`,
+        title: `${demo.name} | Nearspoke`,
         description,
         type: "website",
         url: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}`,
-        siteName: "Smart Link",
+        siteName: "Nearspoke",
         locale: "en_US",
         images: [
           {
@@ -171,7 +200,7 @@ export async function generateMetadata({
       },
       twitter: {
         card: "summary_large_image",
-        title: `${demo.name} | Smart Link`,
+        title: `${demo.name} | Nearspoke`,
         description,
         images: [
           `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/api/og/${slug}`,
@@ -190,7 +219,7 @@ export async function generateMetadata({
       .single();
 
     if (!business) {
-      return { title: "Business Not Found | Smart Link" };
+      return { title: "Business Not Found | Nearspoke" };
     }
 
     const neighborhood = getBusinessNeighborhood(slug);
@@ -204,18 +233,18 @@ export async function generateMetadata({
     const description = business.description || `Visit ${business.name} in ${business.city || "your area"}.`;
 
     return {
-      title: `${business.name} — ${business.city || "Local"} Business | Smart Link`,
+      title: `${business.name} — ${business.city || "Local"} Business | Nearspoke`,
       description,
       keywords,
       alternates: {
         canonical: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}`,
       },
       openGraph: {
-        title: `${business.name} | Smart Link`,
+        title: `${business.name} | Nearspoke`,
         description,
         type: "website",
         url: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/business/${slug}`,
-        siteName: "Smart Link",
+        siteName: "Nearspoke",
         locale: "en_US",
         images: [
           {
@@ -228,7 +257,7 @@ export async function generateMetadata({
       },
       twitter: {
         card: "summary_large_image",
-        title: `${business.name} | Smart Link`,
+        title: `${business.name} | Nearspoke`,
         description,
         images: [
           `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/api/og/${slug}`,
@@ -236,13 +265,19 @@ export async function generateMetadata({
       },
     };
   } catch {
-    return { title: "Smart Link — Business Profile" };
+    return { title: "Nearspoke — Business Profile" };
   }
 }
 
-export default async function BusinessProfilePage({ params }: Props) {
+export default async function BusinessProfilePage({ params, searchParams }: Props) {
   const { slug } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const demo = getDemoBusiness(slug);
+
+  const utm_source = getSearchParam(resolvedSearchParams?.utm_source);
+  const utm_medium = getSearchParam(resolvedSearchParams?.utm_medium);
+  const utm_campaign = getSearchParam(resolvedSearchParams?.utm_campaign);
+  const bookingHref = `/business/${slug}/book${buildQueryString(resolvedSearchParams)}`;
 
   let business: any;
   let services: any[] = [];
@@ -408,12 +443,16 @@ export default async function BusinessProfilePage({ params }: Props) {
       <BusinessProfileClient
         slug={slug}
         isDemo={isDemo}
+        bookingHref={bookingHref}
         phone={business.phone}
         email={business.email}
         address={business.address}
         city={business.city}
         state={business.state}
         zip={business.zip}
+        utm_source={utm_source}
+        utm_medium={utm_medium}
+        utm_campaign={utm_campaign}
       />
 
       {/* Distribution info note */}
@@ -464,7 +503,7 @@ export default async function BusinessProfilePage({ params }: Props) {
 
       {/* Footer */}
       <footer className="text-center text-sm text-gray-400 pt-4 border-t border-gray-100">
-        <p>Powered by <a href="/" className="text-blue-600 hover:underline font-medium">Smart Link</a></p>
+        <p>Powered by <a href="/" className="text-blue-600 hover:underline font-medium">Nearspoke</a></p>
       </footer>
     </main>
   );

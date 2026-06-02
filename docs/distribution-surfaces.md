@@ -1,6 +1,6 @@
-# Distribution Surfaces for Smart Links
+# Distribution Surfaces for Nearspoke Links
 
-Smart Links are designed to be easily shared across all major distribution channels. This document outlines the surfaces and implementation details for how local businesses can share their smart link via QR codes, social media bios, messaging apps, websites, and Maps profiles.
+Nearspoke links are designed to be easily shared across all major distribution channels. This document outlines the surfaces and implementation details for how local businesses can share their smart link via QR codes, social media bios, messaging apps, websites, and Maps profiles.
 
 ## Overview
 
@@ -18,7 +18,7 @@ QR codes are the primary physical distribution surface. A printed QR code pointi
 
 ### Implementation Details
 
-- **Location**: Smart Link business profile pages include a QR code display section at the top of the page
+- **Location**: Nearspoke business profile pages include a QR code display section at the top of the page
 - **Dynamic generation**: QR codes are generated on-demand using server-side libraries (e.g., `qrcode` npm package)
 - **Static assets fallback**: Pre-generated QR images for demo businesses cached in `/public/qr-codes/`
 - **Metadata**: Each QR code includes business slug and optional branding overlay
@@ -49,13 +49,13 @@ Smart links work as canonical URLs in social media profile bios. Unlike generic 
 ### Platform-Specific Notes
 
 **Instagram**
-- Instagram bios allow 3-5 links (Smart Link as primary or secondary link)
+- Instagram bios allow 3-5 links (Nearspoke as primary or secondary link)
 - Use `/api/og/[slug]` endpoint to generate shareable images that appear when shared in stories
 - Example use: "Book now: smartlink.app/business/the-dentist"
 
 **TikTok**
-- Bio links are limited to 1 link per profile (Smart Link recommended as primary)
-- Smart Link's mobile-first design fits TikTok's traffic pattern perfectly
+- Bio links are limited to 1 link per profile (Nearspoke recommended as primary)
+- Nearspoke's mobile-first design fits TikTok's traffic pattern perfectly
 - TikTok also supports rich media cards from OG endpoints
 
 **Facebook Page**
@@ -66,12 +66,12 @@ Smart links work as canonical URLs in social media profile bios. Unlike generic 
 
 ## 3. Messaging App Cards (WhatsApp, SMS, Telegram)
 
-Messaging apps like WhatsApp Business and Telegram allow rich card rendering via embedded URLs that include JSON-LD context. Smart Links are optimized for this—no external PWA required.
+Messaging apps like WhatsApp Business and Telegram allow rich card rendering via embedded URLs that include JSON-LD context. Nearspoke links are optimized for this—no external PWA required.
 
 ### Implementation Details
 
 - **JSON-LD structured data**: Every business page includes Schema.org markup in `<script>` tags
-- **Telegram Bot API compatibility**: Smart Link pages pass Telegram's webapp validation checks
+- **Telegram Bot API compatibility**: Nearspoke pages pass Telegram's webapp validation checks
 - **WhatsApp Business API**: When shared via WhatsApp, the smart link renders with embedded preview (title, description, OG image)
 
 ### Example Flow
@@ -85,7 +85,7 @@ Messaging apps like WhatsApp Business and Telegram allow rich card rendering via
 
 ## 4. Website Embeds (Third-party Sites)
 
-Local businesses often exist on third-party websites: Yext, Foursquare Business Manager, Yelp Partner Pages, or custom corporate sites. Smart Links can be embedded via iframe or widget integration.
+Local businesses often exist on third-party websites: Yext, Foursquare Business Manager, Yelp Partner Pages, or custom corporate sites. Nearspoke links can be embedded via iframe or widget integration.
 
 ### Implementation Details
 
@@ -112,7 +112,7 @@ When a business adds their smart link as the official website URL in Google Busi
 ### Implementation Details
 
 - **JSON-LD schema**: Google requires structured data (verified via Rich Results Test)
-- **Apple Maps compatibility**: Smart Links pass Apple's webapp validation
+- **Apple Maps compatibility**: Nearspoke links pass Apple's webapp validation
 - **Schema.org markup**: Required fields: `@type`, `name`, `description`, `address`, `telephone`
 
 ### Example JSON-LD Output
@@ -146,7 +146,7 @@ To help businesses craft effective copy, here are suggested messaging templates:
 ```
 📱 Scan to book your appointment at The Coffee Roasters
 [QR code image]
-Smart Link · smartlink.app/business/the-coffee-roasters
+Nearspoke · smartlink.app/business/the-coffee-roasters
 ```
 
 ### Instagram Bio

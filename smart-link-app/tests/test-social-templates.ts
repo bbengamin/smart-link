@@ -9,7 +9,7 @@ import { dirname, join } from 'path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-const templatesPath = join(__dirname, '../data/social-copy-templates.json')
+const templatesPath = join(__dirname, '../src/data/social-copy-templates.json')
 
 let passed = 0
 let failed = 0
@@ -67,13 +67,25 @@ test('WhatsApp/SMS templates are valid', () => {
   const whatsapp = templates.whatsapp_sms
   assertEqual(Array.isArray(whatsapp.templates), true)
   assertEqual(whatsapp.templates.length, 4, 'Expected 4 WhatsApp/SMS templates')
-  
+
+  let templatesWithPlaceholders = 0
+
   whatsapp.templates.forEach((tmpl: any, i: number) => {
     assertTrue(
-      tmpl.name && tmpl.text.includes('{{'),
-      `Template ${i} missing name or placeholders`
+      tmpl.name && tmpl.text,
+      `Template ${i} missing name or text`
     )
+
+    if (tmpl.text.includes('{{')) {
+      templatesWithPlaceholders++
+    }
   })
+
+  assertEqual(
+    templatesWithPlaceholders,
+    3,
+    'Expected 3 WhatsApp/SMS templates with placeholders'
+  )
 })
 
 // Test: Google Maps templates

@@ -18,7 +18,7 @@ export default async function QRPage({ params }: { params: Promise<{ slug: strin
         {/* Demo badge */}
         <div className="text-center mb-6">
           <span className="inline-block px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-            Smart Link QR Code
+            Nearspoke QR Code
           </span>
         </div>
 

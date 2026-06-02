@@ -28,6 +28,9 @@ interface BookingFormProps {
   services: Service[];
   hours: BusinessHours;
   isDemo: boolean;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
 }
 
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -91,6 +94,9 @@ export function BookingForm({
   services,
   hours,
   isDemo,
+  utm_source,
+  utm_medium,
+  utm_campaign,
 }: BookingFormProps) {
   // Step state: 0=date, 1=service, 2=details, 3=confirmation
   const [step, setStep] = useState(0);
@@ -158,10 +164,22 @@ export function BookingForm({
     [hours, selectedService]
   );
 
+  const analyticsContext = {
+    slug: businessSlug,
+    business_name: businessName,
+    utm_source,
+    utm_medium,
+    utm_campaign,
+  };
+
   const handleDateSelect = (date: Date) => {
     if (isDateDisabled(date, minDate, maxDate, hours)) return;
     setSelectedDate(date);
     setSelectedTime(null);
+    track("funnel_date_selected", {
+      ...analyticsContext,
+      selected_date: date.toISOString().split("T")[0],
+    });
   };
 
   const handleNext = () => {
@@ -177,6 +195,18 @@ export function BookingForm({
   const handleSubmit = async () => {
     if (!selectedDate || !selectedTime || !selectedService) return;
     setIsSubmitting(true);
+
+    await track("funnel_details_entered", {
+      ...analyticsContext,
+      selected_date: selectedDate.toISOString().split("T")[0],
+      selected_time: selectedTime,
+      service_id: selectedService.id || null,
+      service_name: selectedService.name,
+      total_cents: selectedService.price,
+      has_phone: Boolean(customerPhone.trim()),
+      has_email: Boolean(customerEmail.trim()),
+      has_notes: Boolean(notes.trim()),
+    });
 
     const bookingPayload = {
       businessSlug,
@@ -195,6 +225,18 @@ export function BookingForm({
     const result = await submitBooking(bookingPayload);
 
     setIsSubmitting(false);
+    await track("booking_complete", {
+      ...analyticsContext,
+      success: result.success,
+      booking_id: result.bookingId,
+      selected_date: bookingPayload.date,
+      selected_time: bookingPayload.time,
+      service_id: selectedService.id || null,
+      service_name: selectedService.name,
+      total_cents: selectedService.price,
+      is_demo: isDemo,
+    });
+
     if (result.success) {
       if (isDemo) {
         storeDemoBookingLocally({
@@ -423,7 +465,18 @@ export function BookingForm({
                 {services.map((service) => (
                   <button
                     key={service.id || service.name}
-                    onClick={() => setSelectedService(service)}
+                    onClick={() => {
+                      setSelectedService(service);
+                      setSelectedTime(null);
+                      track("funnel_service_selected", {
+                        ...analyticsContext,
+                        selected_date: selectedDate?.toISOString().split("T")[0],
+                        service_id: service.id || null,
+                        service_name: service.name,
+                        total_cents: service.price,
+                        duration_minutes: service.duration_minutes,
+                      });
+                    }}
                     className="w-full flex items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:border-gray-200 hover:shadow-sm transition-all text-left"
                   >
                     <div>

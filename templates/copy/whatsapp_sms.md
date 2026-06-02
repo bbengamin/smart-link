@@ -1,4 +1,4 @@
-# WhatsApp/SMS Greeting Template for Smart Links
+# WhatsApp/SMS Greeting Template for Nearspoke
 
 ## Platform Notes
 - **WhatsApp:** First message has 2400 char limit (rich text, buttons supported)

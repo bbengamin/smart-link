@@ -1,4 +1,4 @@
-# Smart Link — Pilot Call Notes Template
+# Nearspoke — Pilot Call Notes Template
 
 Date: 2026-05-30
 Scope: first pilot conversations only. This is a lightweight notes template for the first 5-shop outreach wave, not a baby CRM wearing fake glasses.

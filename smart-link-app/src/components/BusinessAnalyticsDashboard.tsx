@@ -9,7 +9,13 @@
 
 import { useState, useEffect } from "react";
 import type { AnalyticsEvent } from "@/lib/analytics";
-import { getStoredEvents, getAnalyticsMode } from "@/lib/analytics";
+import {
+  CONTACT_CLICK_EVENT_LABELS,
+  CONTACT_CLICK_EVENT_TYPES,
+  formatAttributionSource,
+  getStoredEvents,
+  getAnalyticsMode,
+} from "@/lib/analytics";
 
 interface FunnelMetrics {
   total_page_views: number;
@@ -21,6 +27,8 @@ interface FunnelMetrics {
   bookings_complete: number;
   conversion_rate: string;
   sources: Array<{ name: string; count: number }>;
+  contact_actions: Array<{ event_type: string; label: string; count: number }>;
+  contact_sources: Array<{ name: string; count: number }>;
 }
 
 interface DemoAnalyticsDashboardProps {
@@ -35,9 +43,10 @@ export function DemoAnalyticsDashboard({ businessSlug }: DemoAnalyticsDashboardP
   useEffect(() => {
     try {
       const demoMode = getAnalyticsMode();
+      const stored = getStoredEvents();
+      const shouldUseStoredEvents = demoMode || stored.length > 0;
       
-      if (demoMode) {
-        const stored = getStoredEvents();
+      if (shouldUseStoredEvents) {
         setEvents(stored);
         
         const pageViews = stored.filter(e => e.event_type === 'page_view');
@@ -48,14 +57,30 @@ export function DemoAnalyticsDashboard({ businessSlug }: DemoAnalyticsDashboardP
         const bookingsComplete = stored.filter(
           e => e.event_type === 'booking_complete' && (e.properties as any)?.success === true
         );
-        
+        const contactClicks = stored.filter((e) =>
+          CONTACT_CLICK_EVENT_TYPES.includes(e.event_type as (typeof CONTACT_CLICK_EVENT_TYPES)[number]),
+        );
+
         const uniqueVisitors = new Set(pageViews.map(e => (e.properties as any).user_id || e.id)).size;
-        
+
+        // Prioritize UTM sources over referrer for traffic source attribution
         const sourceMap = new Map<string, number>();
         pageViews.forEach(e => {
-          const source = (e.properties as any).referrer || 'direct';
-          sourceMap.set(source, (sourceMap.get(source) || 0) + 1);
+          const sourceName = formatAttributionSource((e.properties as any) || {});
+          sourceMap.set(sourceName, (sourceMap.get(sourceName) || 0) + 1);
         });
+
+        const contactSourceMap = new Map<string, number>();
+        contactClicks.forEach((e) => {
+          const sourceName = formatAttributionSource((e.properties as any) || {});
+          contactSourceMap.set(sourceName, (contactSourceMap.get(sourceName) || 0) + 1);
+        });
+
+        const contactActions = CONTACT_CLICK_EVENT_TYPES.map((eventType) => ({
+          event_type: eventType,
+          label: CONTACT_CLICK_EVENT_LABELS[eventType],
+          count: contactClicks.filter((e) => e.event_type === eventType).length,
+        }));
         
         setMetrics({
           total_page_views: pageViews.length,
@@ -69,6 +94,10 @@ export function DemoAnalyticsDashboard({ businessSlug }: DemoAnalyticsDashboardP
             ? ((bookingsComplete.length / pageViews.length) * 100).toFixed(1)
             : '0.0',
           sources: Array.from(sourceMap.entries())
+            .map(([name, count]) => ({ name, count }))
+            .sort((a, b) => b.count - a.count),
+          contact_actions: contactActions,
+          contact_sources: Array.from(contactSourceMap.entries())
             .map(([name, count]) => ({ name, count }))
             .sort((a, b) => b.count - a.count),
         });
@@ -152,6 +181,47 @@ export function DemoAnalyticsDashboard({ businessSlug }: DemoAnalyticsDashboardP
     );
   };
 
+  const renderContactActions = (): React.JSX.Element | null => {
+    if (!metrics) return null;
+
+    return (
+      <div className="mt-6">
+        <h3 className="font-semibold text-gray-900 mb-3">Contact Actions</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {metrics.contact_actions.map((action) => (
+            <div key={action.event_type} className="rounded-xl border border-gray-100 bg-gray-50 p-3">
+              <div className="text-xs text-gray-500">{action.label}</div>
+              <div className="mt-1 text-2xl font-bold text-gray-900">{action.count}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderContactSources = (): React.JSX.Element | null => {
+    if (!metrics || metrics.contact_sources.length === 0) return null;
+
+    const maxCount = Math.max(...metrics.contact_sources.map((source) => source.count), 1);
+
+    return (
+      <div className="mt-6">
+        <h3 className="font-semibold text-gray-900 mb-3">Contact Sources</h3>
+        <div className="space-y-2">
+          {metrics.contact_sources.slice(0, 5).map((source, idx) => (
+            <div key={idx} className="flex items-center justify-between text-sm">
+              <span className="text-gray-600 truncate flex-1 mr-2">{source.name}</span>
+              <div className="w-32 bg-gray-100 rounded-full h-2 overflow-hidden">
+                <div className="bg-emerald-400 h-full" style={{ width: `${(source.count / maxCount) * 100}%` }} />
+              </div>
+              <span className="w-10 text-right font-medium text-gray-900">{source.count}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
       <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
@@ -164,7 +234,9 @@ export function DemoAnalyticsDashboard({ businessSlug }: DemoAnalyticsDashboardP
       {metrics && metrics.total_page_views > 0 ? (
         <div className="space-y-6">
           {renderFunnelSteps()}
+          {renderContactActions()}
           {renderSources()}
+          {renderContactSources()}
           
           <div className="mt-6 pt-4 border-t border-gray-100 flex gap-2">
             <button 

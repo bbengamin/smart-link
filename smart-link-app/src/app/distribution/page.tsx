@@ -4,7 +4,7 @@ export default async function DistributionAffordances() {
       {/* Header */}
       <div className="text-center mb-10">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-3">
-          Distribution Surfaces for Smart Links
+          Distribution Surfaces for Nearspoke Links
         </h1>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Lightweight affordances showing how a local business can use their smart link from QR codes, social media bios, WhatsApp/SMS, websites, and Maps profiles.
@@ -76,8 +76,24 @@ export default async function DistributionAffordances() {
           <p className="text-sm text-gray-600 mb-3">
             Embed smart links on third-party sites like Yelp, Foursquare, or corporate websites.
           </p>
-          <a href="/embed-widget" className="inline-block text-blue-600 hover:underline text-sm">
-            Get Widget Code →
+          <div className="text-xs text-gray-500 bg-gray-50 p-2 rounded">
+            Use the widget: <a href="/embed-widget" className="text-blue-600 hover:underline">/embed-widget</a>
+          </div>
+        </div>
+
+        {/* Documentation Card */}
+        <div className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
+          <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#6366f1" strokeWidth="2"/>
+            </svg>
+          </div>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">Documentation</h2>
+          <p className="text-sm text-gray-600 mb-3">
+            Learn how smart links distribute across channels and implementation tips.
+          </p>
+          <a href="/docs/distribution" className="inline-block text-blue-600 hover:underline text-sm">
+            Read Docs →
           </a>
         </div>
 
@@ -96,25 +112,6 @@ export default async function DistributionAffordances() {
           <div className="flex -mx-1 mt-2">
             <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium bg-gray-600 text-white rounded-full mr-0.5">✓</span>
             <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium bg-gray-600 text-white rounded-full mr-0.5">✓</span>
-          </div>
-        </div>
-
-        {/* Docs Card */}
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl border border-gray-700 p-6 text-white hover:shadow-md transition-shadow">
-          <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM14 2v6h6" stroke="#60a5fa" strokeWidth="2"/>
-              <path d="M12 18v-6M9 15l3-3 3 3" stroke="#60a5fa" strokeWidth="2"/>
-            </svg>
-          </div>
-          <h2 className="text-lg font-semibold text-gray-100 mb-2">Documentation</h2>
-          <p className="text-sm text-gray-300 mb-3">
-            Detailed guides for each distribution surface. Best practices and copy templates included.
-          </p>
-          <div className="space-y-2">
-            <a href="/docs/distribution" className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded-lg text-sm transition-colors">
-              Full Docs
-            </a>
           </div>
         </div>
       </div>
@@ -169,7 +166,7 @@ export default async function DistributionAffordances() {
             <div className="bg-gray-900 text-white p-4 rounded-lg font-mono text-sm break-all">
               📱 Scan to book your appointment at The Coffee Roasters{'\n'}
               [QR code image]{'\n'}
-              Smart Link · smartlink.app/business/the-coffee-roasters
+              Nearspoke · smartlink.app/business/the-coffee-roasters
             </div>
           </div>
 
@@ -212,12 +209,11 @@ export default async function DistributionAffordances() {
               <span className="w-2 h-2 bg-blue-700 rounded-full"></span>
               SMS Welcome / Auto-reply
             </h3>
-            <div className="bg-gray-100 text-gray-800 p-4 rounded-lg font-mono text-xs leading-relaxed">
-              Hi! Thanks for texting The Coffee Roasters! ☕<br/><br/>
-              Visit our smart link to book appointments:<br/>
-              <a href="sms:smartlink.app/business/the-coffee-roasters" className="text-blue-600 underline">smartlink.app/business/the-coffee-roasters</a><br/><br/>
-              Reply STOP to opt out | Message frequencies may vary
+            <div className="text-sm text-gray-500 italic">
+              Example: Reply STOP to opt out | Message frequencies may vary
+
             </div>
+
           </div>
 
           {/* Google Maps Profile Snippet */}
@@ -270,7 +266,7 @@ export default async function DistributionAffordances() {
 
       {/* Implementation Notes */}
       <footer className="mt-10 text-center text-sm text-gray-400 pt-6 border-t border-gray-200">
-        <p className="mb-2">Powered by <a href="/" className="text-blue-600 hover:underline font-medium">Smart Link</a></p>
+        <p className="mb-2">Powered by <a href="/" className="text-blue-600 hover:underline font-medium">Nearspoke</a></p>
         <p>MVP Phase 5 — Distribution affordances for local business smart links</p>
       </footer>
     </main>

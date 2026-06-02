@@ -7,6 +7,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getDemoBusiness } from "@/data/demo";
 
 export interface BookingFormData {
   businessSlug: string;
@@ -67,7 +68,7 @@ async function sendTelegramOwnerAlert(payload: TelegramOwnerAlertPayload): Promi
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app";
   const bookingUrl = `${appUrl}/business/${payload.businessSlug}/book`;
   const lines = [
-    "🔔 New Smart Link booking",
+    "🔔 New Nearspoke booking",
     `Business: ${payload.businessName}`,
     `Service: ${payload.serviceName} ($${(payload.servicePrice / 100).toFixed(2)})`,
     `When: ${payload.date} at ${payload.time}`,

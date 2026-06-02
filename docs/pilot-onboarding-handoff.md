@@ -1,4 +1,4 @@
-# Smart Link — First Pilot Onboarding Handoff
+# Nearspoke — First Pilot Onboarding Handoff
 
 Date: 2026-05-30
 Audience: internal operator running the first barbershop/salon pilot
@@ -8,13 +8,13 @@ Scope: MVP onboarding only — get one shop live fast, explain the loop clearly,
 Get a pilot shop from "yes, I'm interested" to a live smart link they can share in under 10 days, with one owner walkthrough and a dead-simple distribution plan.
 
 ## What the owner is buying into
-Smart Link is one shareable page for the shop:
+Nearspoke is one shareable page for the shop:
 - customers can see services, prices, hours, and contact details;
 - customers can book without phone-tag;
-- the owner can see where visits/bookings came from;
-- the owner gets a simple dashboard instead of guessing whether Instagram/texts/Google are doing anything.
+- the owner can review source-tagged traffic and booking activity in the MVP flow;
+- the owner gets a simple demo/operator dashboard view instead of guessing whether Instagram/texts/Google are doing anything.
 
-Do not pitch this like a full salon operating system. It isn't. For the pilot, it is one booking/contact loop with source tracking.
+Do not pitch this like a full salon operating system. It isn't. For the pilot, it is one booking/contact loop with source tracking, plus honest caveats about what is still demo-mode.
 
 ## The operator checklist
 
@@ -90,33 +90,40 @@ Use this as the bare-minimum onboarding form or call script:
 - Approval contact for launch
 
 ## Current verified public demo routes
-Verified on 2026-05-31 from the atomic production smoke check.
+Verified on 2026-06-01 from the production MVP smoke check.
 
-Public alias confirmed healthy:
+Current verified public Nearspoke URL:
 - Base URL: `https://smart-link-mu.vercel.app/`
+
+Use these live demo links when walking an owner or tester through the MVP:
 - Demo business profile: `https://smart-link-mu.vercel.app/business/cuts-barbershop`
 - Booking entry: `https://smart-link-mu.vercel.app/business/cuts-barbershop/book`
-- AI business JSON: `https://smart-link-mu.vercel.app/api/ai/cuts-barbershop`
-- Sitemap: `https://smart-link-mu.vercel.app/sitemap.xml`
-- Robots: `https://smart-link-mu.vercel.app/robots.txt`
+- Demo bookings view: `https://smart-link-mu.vercel.app/demo/bookings`
+- Admin dashboard view: `https://smart-link-mu.vercel.app/admin/dashboard`
 
 Exact routes checked and verified:
-- `/` returned 200 with Smart Link page content.
+- `/` returned 200 with Nearspoke page content.
 - `/business/cuts-barbershop` returned 200 with the Cut's Barbershop demo profile.
 - `/business/cuts-barbershop/book` returned 200 with booking-related page content.
-- `/api/ai/cuts-barbershop` returned 200 with the expected business JSON payload.
-- `/sitemap.xml` returned 200 and served valid XML.
-- `/robots.txt` returned 200 and served crawler directives.
+- `/demo/bookings` is a current demo route owners/testers can use when showing the booking flow.
+- `/admin/dashboard` is a current demo route owners/testers can use when explaining the reporting loop.
 
 Current caveat:
-- The production Vercel alias is healthy, but sitemap `loc` entries point at `https://smartlink.app`. Do not claim the custom domain was freshly smoke-tested from this check unless that domain itself gets verified separately.
+- The old stale `smart-link` Vercel project was replaced by the healthy `smart-link-app` deployment path, so do not waste time chasing the wrong deployment.
 - The owner dashboard/reporting story is still MVP/demo-level, not proven live business reporting. Keep that language honest in calls.
+
+## Known live demo limits before first outreach
+- The verified public demo surface is `https://smart-link-mu.vercel.app/`, not a separately verified custom-domain launch.
+- `/admin/dashboard` and `/admin/clients` are still MVP/demo/operator views. They help explain the loop, but they are not fixed live owner portals with proven business data.
+- Demo bookings, dashboard metrics, and client-list entries should be described as concept-valid, not fully ops-valid.
+- Telegram/SMS/email alerts should be positioned as optional pilot setup work, not a guaranteed live feature already wired for every shop.
+- Nearspoke is not selling a CRM migration in this onboarding flow. Keep it to one booking/contact loop plus source tagging.
 
 ## Demo script for the first owner call
 Goal: 10–15 minutes. Show the loop, get approval, don't drown them.
 
 ### 1) Open
-"The whole point of Smart Link is simple: instead of customers bouncing between Instagram, Google, texts, and phone calls, you give them one place to book or contact you. Then you can actually see what's working."
+"The whole point of Nearspoke is simple: instead of customers bouncing between Instagram, Google, texts, and phone calls, you give them one place to book or contact you. Then you can actually see what's working."
 
 ### 2) Show the customer view
 "This is the page your customer lands on from Google, Instagram, a text, or a QR code in the shop. They can see your services, starting prices, hours, and the main button to book or contact you."

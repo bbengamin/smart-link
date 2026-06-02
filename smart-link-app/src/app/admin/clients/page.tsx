@@ -178,7 +178,7 @@ export default function ClientListView() {
 
         {/* Footer */}
         <footer className="mt-12 text-center text-sm text-gray-400 pb-8">
-          <p>Powered by <Link href="/" className="text-blue-600 hover:underline font-medium">Smart Link</Link></p>
+          <p>Powered by <Link href="/" className="text-blue-600 hover:underline font-medium">Nearspoke</Link></p>
         </footer>
       </main>
     </div>

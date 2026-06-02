@@ -193,7 +193,7 @@ export default function DemoBookingsPage() {
 
       {/* Footer */}
       <footer className="mt-12 text-center text-sm text-gray-400 pt-4 border-t border-gray-100">
-        <a href="/" className="text-blue-600 hover:underline">← Back to Smart Link</a>
+        <a href="/" className="text-blue-600 hover:underline">← Back to Nearspoke</a>
       </footer>
     </main>
   );

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app";
 
 export function GET() {
-  const robotsTxt = `# Smart Link — robots.txt
+  const robotsTxt = `# Nearspoke — robots.txt
 
 User-agent: *
 Allow: /

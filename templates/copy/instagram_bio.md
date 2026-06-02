@@ -1,8 +1,8 @@
-# Instagram Bio Template for Smart Links
+# Instagram Bio Template for Nearspoke
 
 ## Platform Notes
 - Character limit: ~150 chars for bio, +23k story link caption space
-- Smart Link as primary or secondary URL (Instagram allows 3-5 links)
+- Nearspoke as primary or secondary URL (Instagram allows 3-5 links)
 - Use `/api/og/[slug]` endpoint to generate shareable images when stories are shared
 
 ## Template Structure

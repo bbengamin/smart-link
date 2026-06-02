@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getAllDemoBusinesses } from "@/data/demo";
 
 export const metadata: Metadata = {
-  title: "Smart Link — Smart Business Links for Local Companies",
+  title: "Nearspoke — Smart Business Links for Local Companies",
   description:
     "Give your business a smart link that books customers, manages clients, and indexes itself to AI. Free for barbershops, salons, and local services.",
   keywords: [
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Smart Link",
-    title: "Smart Link — Smart Business Links for Local Companies",
+    siteName: "Nearspoke",
+    title: "Nearspoke — Smart Business Links for Local Companies",
     description:
       "Give your business a smart link that books customers, manages clients, and indexes itself to AI.",
     images: [
@@ -29,13 +29,13 @@ export const metadata: Metadata = {
         url: `${process.env.NEXT_PUBLIC_APP_URL || "https://smartlink.app"}/api/og/home`,
         width: 1200,
         height: 630,
-        alt: "Smart Link — Smart Business Links for Local Companies",
+        alt: "Nearspoke — Smart Business Links for Local Companies",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Smart Link — Smart Business Links",
+    title: "Nearspoke — Smart Business Links",
     description:
       "One link for your business — booking, contact info, reviews, and more.",
     site: "@SmartLinkApp",
@@ -160,42 +160,50 @@ export default function HomePage() {
       {/* How it works */}
       <section className="mt-28">
         <h2 className="text-center text-3xl font-bold text-gray-900 mb-12">
-          How it works
+          Get started in 3 steps
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div>
             <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
               1
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">Create Your Link</h3>
+            <h3 className="font-semibold text-gray-900 mb-2">Request Your Free Pilot</h3>
             <p className="text-gray-500 text-sm">
-              Sign up, add your services and hours. Takes 2 minutes.
+              We'll set up your smart link with our team. No self-serve signup — just reply to this page or email us directly for a 15-min discovery call.
             </p>
           </div>
           <div>
             <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
               2
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">Share Everywhere</h3>
+            <h3 className="font-semibold text-gray-900 mb-2">We Build Your Link</h3>
             <p className="text-gray-500 text-sm">
-              Put your link on Instagram, business cards, receipts — anywhere.
+              We add your services, hours, and booking flow. Takes 4–6 business days in the pilot.
             </p>
           </div>
           <div>
             <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center mx-auto mb-4">
               3
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">Get Booked</h3>
+            <h3 className="font-semibold text-gray-900 mb-2">Go Live</h3>
             <p className="text-gray-500 text-sm">
-              Customers book, pay deposits, and get SMS confirmations automatically.
+              Share your link, track bookings, and see if it moves your flow. We'll debrief results after 30 days.
             </p>
           </div>
+        </div>
+        <div className="mt-12 rounded-xl bg-yellow-50 border border-yellow-200 p-4 text-center max-w-3xl mx-auto">
+          <p className="text-sm text-gray-700">
+            <strong>Interested?</strong> Reply "I want to join the Nearspoke pilot" in this email thread or 
+            <a href="mailto:gerritseninstagram@gmail.com?subject=Smart Link Pilot Inquiry&body=Hi - I landed on your homepage and am interested in the free 30-day pilot. Please share a discovery call link." 
+               className="text-blue-600 hover:underline font-medium">
+            click here to request the pilot →</a>
+          </p>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="mt-28 text-center text-sm text-gray-400 pt-8 border-t border-gray-100">
-        <p className="mb-2">© 2026 Smart Link. Built for local businesses.</p>
+        <p className="mb-2">© 2026 Nearspoke. Built for local businesses.</p>
         <a href="/demo/bookings" className="text-blue-600 hover:underline">
           View Demo Bookings →
         </a>

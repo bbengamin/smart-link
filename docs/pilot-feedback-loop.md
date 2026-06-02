@@ -1,10 +1,10 @@
-# Smart Link — Pilot Demo Feedback Loop
+# Nearspoke — Pilot Demo Feedback Loop
 
 Date: 2026-05-31
 Scope: first 5 barbershop/salon pilot demos only. Tiny operator loop, not a fake CRM.
 
 ## Goal
-After every owner demo, capture the same signals in under 10 minutes so Smart Link learns fast instead of collecting mushy vibes:
+After every owner demo, capture the same signals in under 10 minutes so Nearspoke learns fast instead of collecting mushy vibes:
 - current booking pain
 - discovery source
 - current tools/workflow

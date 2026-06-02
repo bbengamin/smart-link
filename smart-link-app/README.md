@@ -1,6 +1,6 @@
-# Smart Link
+# Nearspoke
 
-A smart business link platform for local companies — booking, CRM, and AI-indexable profiles.
+A smart business link platform for local companies — booking, CRM, and AI-indexable profiles under the Nearspoke brand.
 
 ## Tech Stack
 

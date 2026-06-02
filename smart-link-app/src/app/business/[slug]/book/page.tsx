@@ -7,17 +7,44 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BookingForm } from "@/app/business/[slug]/book/BookingForm";
+import { BookingTracker } from "@/app/business/[slug]/book/Client";
 import { getDemoBusiness, getDemoServices } from "@/data/demo";
 import { supabase } from "@/lib/supabase";
-import { track } from "@/lib/analytics";
-
-// Track booking page view on load (client-side only)
-if (typeof window !== 'undefined') {
-  track('booking_start', {});
-}
 
 interface Props {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<{
+    utm_source?: string;
+    utm_medium?: string;
+    utm_campaign?: string;
+    [key: string]: string | string[] | undefined;
+  }>;
+}
+
+function getSearchParam(
+  value: string | string[] | undefined,
+): string | undefined {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function buildQueryString(
+  searchParams?: Record<string, string | string[] | undefined>,
+): string {
+  if (!searchParams) return "";
+
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(searchParams)) {
+    if (Array.isArray(value)) {
+      value.forEach((entry) => {
+        if (entry) params.append(key, entry);
+      });
+    } else if (value) {
+      params.set(key, value);
+    }
+  }
+
+  const query = params.toString();
+  return query ? `?${query}` : "";
 }
 
 function isDemoMode(): boolean {
@@ -33,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (demo) {
     return {
-      title: `Book Appointment — ${demo.name} | Smart Link`,
+      title: `Book Appointment — ${demo.name} | Nearspoke`,
       description: `Book an appointment at ${demo.name}. Easy online scheduling.`,
     };
   }
@@ -45,16 +72,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       .eq("slug", slug)
       .single();
     return {
-      title: business ? `Book Appointment — ${business.name} | Smart Link` : "Book Appointment | Smart Link",
+      title: business ? `Book Appointment — ${business.name} | Nearspoke` : "Book Appointment | Nearspoke",
       description: "Book an appointment with your favorite local business.",
     };
   } catch {
-    return { title: "Book Appointment | Smart Link" };
+    return { title: "Book Appointment | Nearspoke" };
   }
 }
 
-export default async function BookingPage({ params }: Props) {
+export default async function BookingPage({ params, searchParams }: Props) {
   const { slug } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const utm_source = getSearchParam(resolvedSearchParams?.utm_source);
+  const utm_medium = getSearchParam(resolvedSearchParams?.utm_medium);
+  const utm_campaign = getSearchParam(resolvedSearchParams?.utm_campaign);
+  const currentQuery = buildQueryString(resolvedSearchParams);
   const demo = getDemoBusiness(slug);
 
   let business: any = null;
@@ -89,9 +121,16 @@ export default async function BookingPage({ params }: Props) {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-8 sm:py-12">
+      <BookingTracker
+        slug={slug}
+        utm_source={utm_source}
+        utm_medium={utm_medium}
+        utm_campaign={utm_campaign}
+      />
+
       {/* Back link */}
       <a
-        href={`/business/${slug}`}
+        href={`/business/${slug}${currentQuery}`}
         className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-6 transition-colors"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,6 +163,9 @@ export default async function BookingPage({ params }: Props) {
         services={services}
         hours={business.hours}
         isDemo={isDemo}
+        utm_source={utm_source}
+        utm_medium={utm_medium}
+        utm_campaign={utm_campaign}
       />
     </main>
   );

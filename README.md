@@ -1,6 +1,6 @@
-# Smart Link
+# Nearspoke
 
-Smart business link platform for local companies — booking, CRM, and AI-indexable profiles.
+Nearspoke is a smart business link platform for local companies — booking, CRM, and AI-indexable profiles.
 
 ## Repo layout
 
@@ -26,6 +26,6 @@ Vercel is configured from the repo root via `.vercel.json`, with the Next.js app
 
 ## Autonomous process notes
 
-- `plan.md` is the operating-rules source of truth for Smart Link board work.
+- `plan.md` is the operating-rules source of truth for Nearspoke board work.
 - QA work must be dispatched as tiny cards: HTTP-only checks, one route-group at a time, or docs-only handoff updates.
 - Do not create broad all-in-one smoke tasks that try to verify routes, APIs, metadata, and docs in one swing. Split first, then fan results into a parent QA card if you need a bigger milestone verdict.

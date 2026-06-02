@@ -1,12 +1,12 @@
-# Smart Link — MVP Pilot Offer for Barbershops & Salons
+# Nearspoke — MVP Pilot Offer for Barbershops & Salons
 
 ## For the Owner Reading This
 
 You run a barbershop or salon. You want more clients walking in, more bookings on your calendar, and a reputation that gets people talking. This offer is for you. No jargon. No "enterprise platform." Just a 30-day pilot to prove it works.
 
-## What Is Smart Link
+## What Is Nearspoke
 
-Smart Link gives you a self-service booking flow that brings qualified leads directly to your shop. Clients browse available styles/prices, book instantly, and get reminders automatically. You keep focus on cutting and styling while the system handles the rest.
+Nearspoke gives you one mobile-friendly page for services, prices, hours, and booking/contact flow. Today the verified live surface is the public Vercel demo at `https://smart-link-mu.vercel.app/`; the booking, dashboard, and client-list story is still MVP/demo-mode, so this pilot is about proving the business loop honestly before pretending it is a finished operating system.
 
 ## Who This Is For (ICP)
 
@@ -18,27 +18,36 @@ Smart Link gives you a self-service booking flow that brings qualified leads dir
 ## The 30-Day Pilot Promise
 
 By day 30 you will have:
-- A live booking link you can share across social, text, and in-shop flyers
-- At least 10 qualified new lead submissions (or we keep working)
-- Clear visibility on where leads come from and how many convert to bookings
-- Your team trained to handle inquiries and onboard new appointments
+- A live pilot link you can share across social, text, and in-shop flyers
+- A real signal on whether customers will use one link for services, contact, and booking intent
+- Manual source-tagged tracking for outreach and distribution links
+- A simple team walkthrough for handling inquiries during the pilot
 
 ## What You Get in the Pilot (Free)
 
 | Feature | What It Does |
 |---------|--------------|
-| **Booking Flow** | Clients browse styles, see prices, book 24/7 via a single link |
-| **Funnel Analytics** | Track source → browse → booking → conversion so you know what works |
-| **Owner Dashboard** | Real-time view of all appointments, revenue, and client pipeline |
-| **Smart Notifications** | Auto-reminders to reduce no-shows; SMS/email configurable |
-| **Demo/Preview Access** | Full functionality to test before public launch |
+| **Booking/Contact Flow** | Clients can browse services, see prices, and use one link to book or contact the shop in the MVP flow |
+| **Source Tagging** | Outreach and distribution links can carry UTMs so the pilot can track traffic sources manually and in MVP analytics |
+| **Owner Dashboard Loop** | Demo/operator reporting view for visits, source tags, and booking activity — useful for the concept, not yet proven live owner reporting |
+| **Notifications Setup Review** | Reminder/alert paths can be discussed during pilot setup, but exact SMS/email/Telegram delivery is not promised up front |
+| **Demo/Preview Access** | Verified public demo access today on Vercel; custom domain timing is separate |
 
 ## What's NOT Included (Keep It Simple)
 
 - No CRM integrations or platform expansion during pilot
 - No pricing matrix or feature comparison — just the booking flow
 - No custom development — out-of-the-box for real results fast
-- Public URL live externally yet (we're launching publicly; pilot participants get first access)
+- No claim that the custom domain is live yet — the verified public demo currently runs on Vercel at `https://smart-link-mu.vercel.app/`
+- No promise of a fully live owner reporting stack on day one — dashboard/reporting is MVP/demo-level until proven in a real pilot
+
+## Known live demo limits before first outreach
+
+- The verified public surface today is `https://smart-link-mu.vercel.app/`, not a separately verified `smartlink.app` launch.
+- `/admin/dashboard` and `/admin/clients` are useful demo/operator views, but they are not fixed live owner portals with proven business data.
+- Demo bookings and reporting still need live-pilot validation; do not frame them as a finished back-office system.
+- Telegram/SMS/email alerts may be part of a pilot setup discussion, but live delivery should be treated as optional until configured and tested for that shop.
+- Nearspoke is intentionally not pitching CRM migration in this offer. The point is one cleaner customer path, not a giant salon software replacement.
 
 ## Pricing & Commitment
 
@@ -56,26 +65,26 @@ By day 30 you will have:
 - Phone number for SMS reminders (can be staff mobile; no landline required)
 - List of services & prices you want on the booking flow (we'll help draft)
 
-We handle: hosting, domain redirect, dashboard, notifications, analytics wiring.
+We handle: hosting, pilot-link setup, MVP dashboard/reporting walkthrough, optional reminder/alert planning, and analytics tagging.
 
 ## Onboarding Handoff — The 5 Steps We Do For You
 
 | Step | Who Acts | Timeline | What Happens |
 |------|----------|----------|---------------|
 | **1. Discovery Call** | Our onboarding specialist | Day 0–1 | 15-min call to confirm services, pricing, branding needs |
-| **2. Account Provisioning** | Smart Link team | Day 2–3 | Dashboard created; your brand settings applied |
-| **3. Booking Flow Build** | Smart Link team | Day 4–6 | Styles/services entered; link generated; you test on mobile |
-| **4. Team Training** | Smart Link trainer | Day 7–9 | 1-on-1 walkthrough for staff: Q&A, handling common objections |
-| **5. Soft Launch** | Joint review | Day 10+ | Public-facing booking goes live; analytics start flowing to your dashboard |
+| **2. Account Provisioning** | Nearspoke team | Day 2–3 | MVP preview link and reporting walkthrough prepared; your brand settings applied |
+| **3. Booking Flow Build** | Nearspoke team | Day 4–6 | Styles/services entered; link generated; you test on mobile |
+| **4. Team Training** | Nearspoke trainer | Day 7–9 | 1-on-1 walkthrough for staff: Q&A, handling common objections |
+| **5. Soft Launch** | Joint review | Day 10+ | Your pilot link goes live on the verified public Vercel URL; analytics/reporting stays explicitly MVP/demo-level until the live pilot proves the loop |
 
 ## How We Define "Success" in the Pilot
 
 We measure this together:
 
-- **Lead Volume:** Minimum 10 qualified leads by day 25 (or we iterate)
-- **Conversion Rate:** At least 40% of leads converting to booked appointments
-- **Revenue Attribution:** You can see which clients booked via Smart Link vs other channels
-- **Retention:** Clients who return ≥1 time in month 1 (we help with follow-up templates)
+- **Usage Signal:** Customers actually use the shared pilot link instead of forcing everything back into phone-tag
+- **Source Visibility:** We can review tagged traffic sources honestly, using MVP analytics plus manual notes where needed
+- **Operator Fit:** The shop owner and staff can explain the customer path and handle incoming inquiries without chaos
+- **Retention Direction:** We identify whether repeat-booking or follow-up workflows are worth building next for that shop
 
 If you miss any metric, we adjust the funnel or offer before day 30 ends.
 
@@ -89,7 +98,7 @@ No pressure. You also get to keep the lead list we build together during pilot i
 
 ## How To Start (Next Action)
 
-**Reply with:** "I want to join the Smart Link pilot"  
+**Reply with:** "I want to join the Nearspoke pilot"  
 We'll respond within 2 hours with:
 - A 15-min discovery call link
 - A short intake form (3 questions about your current setup)
@@ -105,4 +114,4 @@ If you don't hear from us in 4 hours, ping us again — we want this to move fas
 
 ---
 
-*Smart Link MVP Pilot — Offer valid while capacity exists. Launching publicly soon.*
+*Nearspoke MVP Pilot — Offer valid while capacity exists. Public demo is live on Vercel; custom-domain rollout, live reporting, and alert delivery still need explicit pilot-by-pilot proof.*

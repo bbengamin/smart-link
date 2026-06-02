@@ -7,7 +7,7 @@ LOCK_FILE="/opt/data/autonomous/smart-link/lock.txt"
 PLAN="/opt/data/autonomous/smart-link/plan.md"
 LOG_DIR="/opt/data/autonomous/smart-link/logs"
 TIMESTAMP=$(date +%Y-%m-%d)
-TICK_NUM=$(ls "$LOG_DIR"/worker-tick*.md 2>/dev/null | wc -l | tr -d ' ')
+TICK_NUM=$(ls "$LOG_DIR"/worker-tick*.md 2>/dev/null | wc -l | tr -d '[:space:]' || echo 0)
 
 # Lock check
 if [ -f "$LOCK_FILE" ]; then

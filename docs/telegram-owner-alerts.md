@@ -1,6 +1,6 @@
 # Telegram owner alerts
 
-This is the minimum honest setup for Smart Link booking alerts. No magic, no fake "integrated" checkbox nonsense.
+This is the minimum honest setup for Nearspoke booking alerts. No magic, no fake "integrated" checkbox nonsense.
 
 ## What this does today
 
@@ -29,7 +29,7 @@ Put these in `smart-link-app/.env.local` or feed them through `scripts/sync_env.
 
 ## Demo / missing-env behavior
 
-- If `NEXT_PUBLIC_SUPABASE_URL` is empty/placeholder/demo, Smart Link stays in demo mode and skips Telegram delivery.
+- If `NEXT_PUBLIC_SUPABASE_URL` is empty/placeholder/demo, Nearspoke stays in demo mode and skips Telegram delivery.
 - If `TELEGRAM_BOT_TOKEN` or `TELEGRAM_CHAT_ID` is missing in live mode, the booking still succeeds and the server logs a skip message.
 - If Telegram rejects the request, the booking still succeeds and the server logs a non-fatal warning.
 

@@ -106,7 +106,7 @@ export function buildBusinessKeywords(params: {
     new Set(
       [
         params.name,
-        `Smart Link ${typeLabel}`,
+        `Nearspoke ${typeLabel}`,
         typeLabel,
         params.city,
         params.state,

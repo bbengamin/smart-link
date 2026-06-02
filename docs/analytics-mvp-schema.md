@@ -1,4 +1,4 @@
-# Smart Link — Analytics MVP: Funnel Metrics Schema
+# Nearspoke — Analytics MVP: Funnel Metrics Schema
 
 **Status:** ✅ Functional (demo mode), 🔄 Production vendor TBD  
 **Date:** 2026-05-30  
@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-Smart Link's MVP funnel tracking is **live and functional** using localStorage-based analytics. This document captures the complete MVP schema, tracks the five-stage booking funnel from page view to completion, and recommends next steps for production migration when business volume warrants it.
+Nearspoke's MVP funnel tracking is **live and functional** using localStorage-based analytics. This document captures the complete MVP schema, tracks the five-stage booking funnel from page view to completion, and recommends next steps for production migration when business volume warrants it.
 
 **Key Decision:** Do not integrate a paid analytics vendor (PostHog, Mixpanel, Plausible, etc.) until we hit ~10K+ page views OR revenue crosses $50K/mo — at that point, evaluate based on data depth vs. cost. For now, localStorage is sufficient and zero-cost.
 
@@ -123,4 +123,4 @@ Do we add `business_slug` as a required property on all events? Currently only s
 
 ## Author
 
-Ihor • Smart Link MVP Team
+Ihor • Nearspoke MVP Team

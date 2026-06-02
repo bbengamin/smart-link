@@ -1,10 +1,10 @@
-# Smart Link — First 5-Shop Pilot Outreach Packet
+# Nearspoke — First 5-Shop Pilot Outreach Packet
 
 Date: 2026-05-30
 Prepared from public map/directory data (OpenStreetMap Nominatim lookups). Treat every phone/email/social handle as "verify once before sending" — directory data is useful, not gospel.
 
 ## Goal
-Build a tiny, hand-curated first prospect list for the Smart Link barbershop/salon pilot, plus the first-contact copy and tracking tags.
+Build a tiny, hand-curated first prospect list for the Nearspoke barbershop/salon pilot, plus the first-contact copy and tracking tags.
 
 ## Selection rule
 Picked shops that look like a fit for the current MVP offer:
@@ -15,10 +15,10 @@ Picked shops that look like a fit for the current MVP offer:
 
 ## Recommended first 5 prospects
 
-| Priority | Business | Area | Public contact channel(s) seen | Online presence gap | Why Smart Link fits | Best first channel |
+| Priority | Business | Area | Public contact channel(s) seen | Online presence gap | Why Nearspoke fits | Best first channel |
 |---|---|---|---|---|---|---|
 | 1 | Gerritsen Barber Shop & Hair Salon | Gerritsen Beach, Brooklyn | Phone: +1-718-684-7811; Email: gerritseninstagram@gmail.com; Instagram: https://www.instagram.com/gerritsenbarbershop/ | Instagram + Gmail, but no public website or booking link found | Looks owner-operated, already using Instagram, easy to pitch as "one booking link for IG bio + texts" | Instagram DM or email |
-| 2 | Kings Barber Shop | Bensonhurst, Brooklyn | Phone: +1-718-513-4171 | Public hours listed, but no website, no social handle, no booking flow found | Classic neighborhood barber profile; Smart Link can replace phone-tag and make walk-in overflow bookable | SMS or phone follow-up after text |
+| 2 | Kings Barber Shop | Bensonhurst, Brooklyn | Phone: +1-718-513-4171 | Public hours listed, but no website, no social handle, no booking flow found | Classic neighborhood barber profile; Nearspoke can replace phone-tag and make walk-in overflow bookable | SMS or phone follow-up after text |
 | 3 | Percy's Unisex Barber Shop | Unionport, Bronx | Phone: +1-718-822-9313 | Public phone + hours, but no website or booking funnel found | Unisex shop means broader service mix; a single booking link + reminders likely lands well | SMS |
 | 4 | Naespa Nails & Hair Salon | Astoria, Queens | Phone: +1-347-894-6190 | Public phone + hours, but no website or booking link found | Salon services usually benefit from service menu + appointment reminders more than pure walk-ins | SMS |
 | 5 | Radiant Reflections Beauty Salon | Harlem, Manhattan | Phone: +1-347-899-7266 | Phone only; no website, no social, no booking link found | Strong fit for a "private pilot, we set it up for you" offer because the current online stack looks thin | SMS or phone intro |
@@ -34,7 +34,7 @@ Picked shops that look like a fit for the current MVP offer:
 Gerritsen Barber Shop & Hair Salon is the best first shot.
 
 Why:
-- it already has Instagram, which makes the Smart Link value painfully obvious: one link in bio, one shareable booking page, one place for services/hours/reviews;
+- it already has Instagram, which makes the Nearspoke value painfully obvious: one link in bio, one shareable booking page, one place for services/hours/reviews;
 - there is also a fallback email, so contact does not depend on one channel;
 - the lack of a public website/booking flow is exactly the gap the MVP is built to fill.
 
@@ -45,14 +45,14 @@ Keep the tone simple. No startup sludge. No fake hype. Just the gap, the offer, 
 ### 1) Instagram DM / WhatsApp opener
 Hi — I’m reaching out because Gerritsen Barber Shop & Hair Salon already has the social presence, but I couldn’t find a simple booking link or service page for customers.
 
-I’m working on a private Smart Link pilot for barbershops/salons: we set up one mobile-friendly booking page with your services, pricing, hours, and reminders so clients can book without phone-tag.
+I’m working on a private Nearspoke pilot for barbershops/salons: we set up one mobile-friendly link with your services, pricing, hours, and booking/contact flow so clients stop bouncing between DMs, texts, and phone-tag.
 
 The pilot is free for 30 days, and if it doesn’t help generate real bookings, you walk away.
 
 If you want, I can send a 2-minute preview and the short pilot outline.
 
 ### 2) SMS opener
-Hi — I’m running a free 30-day Smart Link pilot for barbershops/salons. We set up one booking link for services, hours, and reminders. Want a short preview?
+Hi — I’m running a free 30-day Nearspoke pilot for barbershops/salons. We set up one mobile-friendly link for services, hours, and booking/contact flow. Want a short preview?
 
 ### 3) Email opener
 Subject: quick idea for Gerritsen Barber Shop & Hair Salon
@@ -61,7 +61,7 @@ Hi,
 
 I found Gerritsen Barber Shop & Hair Salon while looking for a few local shops for a private pilot.
 
-The pitch is simple: Smart Link gives a shop one clean booking page with services, prices, hours, and reminders so customers can book without calling back and forth.
+The pitch is simple: Nearspoke gives a shop one clean mobile-friendly link with services, prices, hours, and booking/contact flow so customers are not stuck calling back and forth.
 
 For pilot shops, setup is free for 30 days. The goal is to prove whether it drives real bookings before asking anyone to pay.
 
@@ -78,8 +78,8 @@ Perfect — I’ll send the 2-minute preview plus the short pilot outline.
 What’s included in the pilot:
 - one booking link for your shop
 - services/prices/hours setup
-- reminder flow to cut no-shows
-- source tracking so you can see where bookings came from
+- source-tagged distribution links we can review honestly
+- a simple operator walkthrough of the MVP dashboard/demo flow
 
 If it looks interesting, the next step is a 15-minute setup call.
 
@@ -160,6 +160,13 @@ Track each prospect manually even before product-side CRM exists:
 - Start with 1 shop, learn from the reply pattern, then send the next 2.
 - Verify the contact channel manually before sending.
 - Keep the preview honest: this is a private pilot, not a finished public platform.
+
+## Known live demo limits before first outreach
+- The verified public demo URL today is `https://smart-link-app-swart.vercel.app/`. Note that the vanity alias `smart-link-mu.vercel.app` currently redirects to the wrong Vercel project and should not be used for pilots until fixed.
+- Do not claim `smartlink.app` is the verified live surface unless that domain itself is checked separately.
+- Do not pitch `/admin/dashboard` or `/admin/clients` as fixed live owner portals; they are still MVP/demo views.
+- Do not promise Telegram/SMS/email alerts as already live for every pilot shop. Treat alerts as optional setup work that needs explicit testing.
+- Do not drift into CRM talk. The pitch is one cleaner booking/contact path, not a giant back-office replacement.
 
 ## Exact next human action
 Approve Gerritsen Barber Shop & Hair Salon as prospect #1, verify the Instagram/email contact manually, then send the Instagram DM opener above as the first live outreach touch.

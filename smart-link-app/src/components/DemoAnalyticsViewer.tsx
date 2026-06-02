@@ -4,7 +4,13 @@
  */
 
 import { useState, useEffect } from "react";
-import { getStoredEvents, type AnalyticsEvent } from "@/lib/analytics";
+import {
+  CONTACT_CLICK_EVENT_LABELS,
+  CONTACT_CLICK_EVENT_TYPES,
+  formatAttributionSource,
+  getStoredEvents,
+  type AnalyticsEvent,
+} from "@/lib/analytics";
 
 function formatTime(ts: string): string {
   return new Date(ts).toLocaleTimeString("en-US", {
@@ -38,6 +44,24 @@ export default function DemoAnalyticsViewer() {
     ).length,
   };
 
+  const contactCounts = CONTACT_CLICK_EVENT_TYPES.map((eventType) => ({
+    eventType,
+    label: CONTACT_CLICK_EVENT_LABELS[eventType],
+    count: events.filter((event) => event.event_type === eventType).length,
+  }));
+
+  const contactSourceMap = new Map<string, number>();
+  events
+    .filter((event) => CONTACT_CLICK_EVENT_TYPES.includes(event.event_type as (typeof CONTACT_CLICK_EVENT_TYPES)[number]))
+    .forEach((event) => {
+      const sourceName = formatAttributionSource(event.properties || {});
+      contactSourceMap.set(sourceName, (contactSourceMap.get(sourceName) || 0) + 1);
+    });
+
+  const contactSources = Array.from(contactSourceMap.entries())
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
+
   return (
     <div className="space-y-4">
       {/* Funnel Summary */}
@@ -69,6 +93,31 @@ export default function DemoAnalyticsViewer() {
             <div className="font-bold text-green-600">{funnelMetrics.bookingsCompleted}</div>
           </div>
         </div>
+      </div>
+
+      <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+        <h3 className="font-semibold text-gray-900 mb-3">Contact Actions</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+          {contactCounts.map((contact) => (
+            <div key={contact.eventType} className="bg-gray-50 p-2 rounded-lg">
+              <div className="text-xs text-gray-500">{contact.label}</div>
+              <div className="font-bold text-emerald-600">{contact.count}</div>
+            </div>
+          ))}
+        </div>
+        {contactSources.length > 0 && (
+          <div className="mt-4">
+            <div className="text-xs font-medium uppercase tracking-wide text-gray-500 mb-2">Top contact sources</div>
+            <div className="space-y-2 text-sm">
+              {contactSources.slice(0, 5).map((source) => (
+                <div key={source.name} className="flex items-center justify-between gap-3 rounded-lg bg-gray-50 px-3 py-2">
+                  <span className="truncate text-gray-600">{source.name}</span>
+                  <span className="font-semibold text-gray-900">{source.count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Raw Events Log */}
