@@ -193,10 +193,7 @@ export default function HomePage() {
         </div>
         <div className="mt-12 rounded-xl bg-yellow-50 border border-yellow-200 p-4 text-center max-w-3xl mx-auto">
           <p className="text-sm text-gray-700">
-            <strong>Interested?</strong> Reply "I want to join the Nearspoke pilot" in this email thread or 
-            <a href="mailto:gerritseninstagram@gmail.com?subject=Smart Link Pilot Inquiry&body=Hi - I landed on your homepage and am interested in the free 30-day pilot. Please share a discovery call link." 
-               className="text-blue-600 hover:underline font-medium">
-            click here to request the pilot →</a>
+            <strong>Interested?</strong> Pilot requests are currently handled through the existing Nearspoke outreach and owner approval flow while the public inbox is being configured. If you reached this page from a Nearspoke message, reply there with "I want to join the Nearspoke pilot."
           </p>
         </div>
       </section>
